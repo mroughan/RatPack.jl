@@ -1,0 +1,10 @@
+name = "RatPack"
+uuid = "6eb37bf5-b193-570e-991c-f15d35c64f82"
+authors = ["Matthew Roughan <matthew.roughana@adelaide.edu.au>"]
+version = "0.1.0"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
