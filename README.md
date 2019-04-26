@@ -7,9 +7,12 @@
 
 ## Competitive ratings
 
-Competetive ratings are ratings of players or teams in competitive sports created by analysis of their performance.
+Competetive ratings are ratings of players or teams in competitive
+sports created by analysis of their performance. That is, if you win
+more, your rating should be higher.
 
-There are many schemes for generating such, but essential ideas underlying the ratings schemes here is that they be
+There are many schemes for generating such, but essential ideas
+underlying the ratings schemes here is that they be
 
 1. Transparent (easily computable by anyone, and thus objective);
 
@@ -17,7 +20,10 @@ There are many schemes for generating such, but essential ideas underlying the r
    a player should get more credit for defeating stronger opponients,
    where stronger here is with respect to the ratings themselves.
 
-3. 
+3. Non-gameable. That is, you should not be able to arbitrarily
+   improve your rating without an improvement in skill. For instance,
+   the number of games you play should not be a major input, so much
+   as the results of those games. 
 
 
 ## Elo et al
