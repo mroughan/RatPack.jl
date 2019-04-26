@@ -22,7 +22,7 @@ macro check_args(D, cond)
             throw(ArgumentError(string(
                 $(string(D)), ": the condition ", $(string(cond)), " is not satisfied.")))
         end
-    end
+    end 
 end
 
 ### ratings structures and associated functions
