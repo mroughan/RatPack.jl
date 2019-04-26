@@ -33,6 +33,11 @@ The goals of such ratings are related but somewhat varied and include:
 
 3. 
 
+One side note: there is a subtle distinction between "ratings" and
+"rankings". The latter is simply an ordering of players (or teams),
+whereas the former provides a numerical value that also indicates some
+idea of the players' *strengths* relative to each other.
+
 ## Elo et al
 
 Competitive ratings started (as far as I know) in Chess. Elo created
