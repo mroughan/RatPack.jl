@@ -67,3 +67,5 @@ Indeed the package also includes several test sets of data:
 
 ## How to use it 
 
+The package is still under development, and as such the interfaces are
+still a moving target. Give me a few days. 
