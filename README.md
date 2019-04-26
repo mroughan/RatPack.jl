@@ -48,6 +48,12 @@ are currently simple versions of
 + Elo
 + Keener
 
+To add
+
++ Advanced and alternative versions of the above
++ Glicko (1 and 2)
++ [MS TrueSkill](https://www.microsoft.com/en-us/research/project/trueskill-ranking-system/)
+
 The package also provides some additional tools for working with ratings. 
 
 ## How to use it 
