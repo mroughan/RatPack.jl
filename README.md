@@ -54,7 +54,16 @@ To add
 + Glicko (1 and 2)
 + [MS TrueSkill](https://www.microsoft.com/en-us/research/project/trueskill-ranking-system/)
 
-The package also provides some additional tools for working with ratings. 
+The package also provides some additional tools for working with
+ratings. For instance simulating competitions according to several
+models, and I/O of data.
+
+Indeed the package also includes several test sets of data:
+
++ Small example from Langville and Meyer
++ 2009-10 NFL (also used as an example in Langville and Meyer)
++ NBA data used by 538
++ 
 
 ## How to use it 
 
