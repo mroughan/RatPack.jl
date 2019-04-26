@@ -23,19 +23,24 @@ There are many schemes for generating such, but essential ideas underlying the r
 ## Elo et al
 
 Competitive ratings started (as far as I know) in Chess. Elo created
-the most famous Chess ratings system as a result of eprceived problems
-in existing systems.
+the most famous Chess ratings system as a result of perceived problems
+in existing systems. However there are many other schemes that have
+developed in parallel, or since. 
 
+The main reference used in defining notation and results is "Whos's
+\#1", by Langville and Meyer, Princeton, 2012. Other texts are referred
+to in the relevant piece of source code. 
 
 ## The package
 
 The package aims to provide means to perform all of the standard, and
 some slightly non-standard ratings calculations. The supported systems
-are currently:
+are currently simple versions of 
 
-+
-+
-+
++ Massey
++ Colley
++ Elo
++ Keener
 
 The package also provides some additional tools for working with ratings. 
 
