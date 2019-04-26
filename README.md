@@ -25,6 +25,13 @@ underlying the ratings schemes here is that they be
    the number of games you play should not be a major input, so much
    as the results of those games. 
 
+The goals of such ratings are related but somewhat varied and include:
+
+1. Matchmaking (pitting similar players against each other)
+
+2. Predicting outcomes (e.g., for gambling or other reasons)
+
+3. 
 
 ## Elo et al
 
@@ -51,6 +58,7 @@ are currently simple versions of
 To add
 
 + Advanced and alternative versions of the above
++ Eigenvalue/Markovian ratings
 + Glicko (1 and 2)
 + [MS TrueSkill](https://www.microsoft.com/en-us/research/project/trueskill-ranking-system/)
 
