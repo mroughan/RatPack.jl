@@ -1,0 +1,257 @@
+Player A,Player B,Outcome,Factor A,Factor B,Score A,Score B
+Pittsburgh Steelers,Tennessee Titans,1,0,0,13,10
+Indianapolis Colts,Jacksonville Jaguars,1,0,0,14,12
+Denver Broncos,Cincinnati Bengals,1,0,0,12,7
+Baltimore Ravens,Kansas City Chiefs,1,0,0,38,24
+New Orleans Saints,Detroit Lions,1,0,0,45,27
+Dallas Cowboys,Tampa Bay Buccaneers,1,0,0,34,21
+New York Jets,Houston Texans,1,0,0,24,7
+Minnesota Vikings,Cleveland Browns,1,0,0,34,20
+Philadelphia Eagles,Carolina Panthers,1,0,0,38,10
+Atlanta Falcons,Miami Dolphins,1,0,0,19,7
+San Francisco 49ers,Arizona Cardinals,1,0,0,20,16
+New York Giants,Washington Redskins,1,0,0,23,17
+Seattle Seahawks,St. Louis Rams,1,0,0,28,0
+Green Bay Packers,Chicago Bears,1,0,0,21,15
+New England Patriots,Buffalo Bills,1,0,0,25,24
+San Diego Chargers,Oakland Raiders,1,0,0,24,20
+Oakland Raiders,Kansas City Chiefs,1,0,0,13,10
+Atlanta Falcons,Carolina Panthers,1,0,0,28,20
+Washington Redskins,St. Louis Rams,1,0,0,9,7
+Cincinnati Bengals,Green Bay Packers,1,0,0,31,24
+New York Jets,New England Patriots,1,0,0,16,9
+Houston Texans,Tennessee Titans,1,0,0,34,31
+Arizona Cardinals,Jacksonville Jaguars,1,0,0,31,17
+Minnesota Vikings,Detroit Lions,1,0,0,27,13
+New Orleans Saints,Philadelphia Eagles,1,0,0,48,22
+Buffalo Bills,Tampa Bay Buccaneers,1,0,0,33,20
+San Francisco 49ers,Seattle Seahawks,1,0,0,23,10
+Denver Broncos,Cleveland Browns,1,0,0,27,6
+Baltimore Ravens,San Diego Chargers,1,0,0,31,26
+Chicago Bears,Pittsburgh Steelers,1,0,0,17,14
+New York Giants,Dallas Cowboys,1,0,0,33,31
+Indianapolis Colts,Miami Dolphins,1,0,0,27,23
+Green Bay Packers,St. Louis Rams,1,0,0,36,17
+New York Giants,Tampa Bay Buccaneers,1,0,0,24,0
+Philadelphia Eagles,Kansas City Chiefs,1,0,0,34,14
+Detroit Lions,Washington Redskins,1,0,0,19,14
+New England Patriots,Atlanta Falcons,1,0,0,26,10
+Baltimore Ravens,Cleveland Browns,1,0,0,34,3
+New York Jets,Tennessee Titans,1,0,0,24,17
+Jacksonville Jaguars,Houston Texans,1,0,0,31,24
+Minnesota Vikings,San Francisco 49ers,1,0,0,27,24
+New Orleans Saints,Buffalo Bills,1,0,0,27,7
+Chicago Bears,Seattle Seahawks,1,0,0,25,19
+San Diego Chargers,Miami Dolphins,1,0,0,23,13
+Cincinnati Bengals,Pittsburgh Steelers,1,0,0,23,20
+Denver Broncos,Oakland Raiders,1,0,0,23,3
+Indianapolis Colts,Arizona Cardinals,1,0,0,31,10
+Dallas Cowboys,Carolina Panthers,1,0,0,21,7
+New York Giants,Kansas City Chiefs,1,0,0,27,16
+Washington Redskins,Tampa Bay Buccaneers,1,0,0,16,13
+New England Patriots,Baltimore Ravens,1,0,0,27,21
+Chicago Bears,Detroit Lions,1,0,0,48,24
+Houston Texans,Oakland Raiders,1,0,0,29,6
+Indianapolis Colts,Seattle Seahawks,1,0,0,34,17
+Cincinnati Bengals,Cleveland Browns,1,0,0,23,20
+Jacksonville Jaguars,Tennessee Titans,1,0,0,37,17
+Miami Dolphins,Buffalo Bills,1,0,0,38,10
+New Orleans Saints,New York Jets,1,0,0,24,10
+Denver Broncos,Dallas Cowboys,1,0,0,17,10
+San Francisco 49ers,St. Louis Rams,1,0,0,35,0
+Pittsburgh Steelers,San Diego Chargers,1,0,0,38,28
+Minnesota Vikings,Green Bay Packers,1,0,0,30,23
+Dallas Cowboys,Kansas City Chiefs,1,0,0,26,20
+Minnesota Vikings,St. Louis Rams,1,0,0,38,10
+Cleveland Browns,Buffalo Bills,1,0,0,6,3
+Philadelphia Eagles,Tampa Bay Buccaneers,1,0,0,33,14
+New York Giants,Oakland Raiders,1,0,0,44,7
+Pittsburgh Steelers,Detroit Lions,1,0,0,28,20
+Cincinnati Bengals,Baltimore Ravens,1,0,0,17,14
+Carolina Panthers,Washington Redskins,1,0,0,20,17
+Atlanta Falcons,San Francisco 49ers,1,0,0,45,10
+Arizona Cardinals,Houston Texans,1,0,0,28,21
+Seattle Seahawks,Jacksonville Jaguars,1,0,0,41,0
+Denver Broncos,New England Patriots,1,0,0,20,17
+Indianapolis Colts,Tennessee Titans,1,0,0,31,9
+Miami Dolphins,New York Jets,1,0,0,31,27
+Carolina Panthers,Tampa Bay Buccaneers,1,0,0,28,21
+Pittsburgh Steelers,Cleveland Browns,1,0,0,27,14
+Green Bay Packers,Detroit Lions,1,0,0,26,0
+Houston Texans,Cincinnati Bengals,1,0,0,28,17
+New Orleans Saints,New York Giants,1,0,0,48,27
+Jacksonville Jaguars,St. Louis Rams,1,0,0,23,20
+Kansas City Chiefs,Washington Redskins,1,0,0,14,6
+Minnesota Vikings,Baltimore Ravens,1,0,0,33,31
+Oakland Raiders,Philadelphia Eagles,1,0,0,13,9
+Arizona Cardinals,Seattle Seahawks,1,0,0,27,3
+New England Patriots,Tennessee Titans,1,0,0,59,0
+Buffalo Bills,New York Jets,1,0,0,16,13
+Atlanta Falcons,Chicago Bears,1,0,0,21,14
+Denver Broncos,San Diego Chargers,1,0,0,34,23
+Indianapolis Colts,St. Louis Rams,1,0,0,42,6
+San Diego Chargers,Kansas City Chiefs,1,0,0,37,7
+Green Bay Packers,Cleveland Browns,1,0,0,31,3
+Pittsburgh Steelers,Minnesota Vikings,1,0,0,27,17
+Houston Texans,San Francisco 49ers,1,0,0,24,21
+New England Patriots,Tampa Bay Buccaneers,1,0,0,35,7
+Buffalo Bills,Carolina Panthers,1,0,0,20,9
+New York Jets,Oakland Raiders,1,0,0,38,0
+Dallas Cowboys,Atlanta Falcons,1,0,0,37,21
+New Orleans Saints,Miami Dolphins,1,0,0,46,34
+Cincinnati Bengals,Chicago Bears,1,0,0,45,10
+Arizona Cardinals,New York Giants,1,0,0,24,17
+Philadelphia Eagles,Washington Redskins,1,0,0,27,17
+Chicago Bears,Cleveland Browns,1,0,0,30,6
+Miami Dolphins,New York Jets,1,0,0,30,25
+Baltimore Ravens,Denver Broncos,1,0,0,30,7
+Houston Texans,Buffalo Bills,1,0,0,31,10
+Indianapolis Colts,San Francisco 49ers,1,0,0,18,14
+Dallas Cowboys,Seattle Seahawks,1,0,0,38,17
+St. Louis Rams,Detroit Lions,1,0,0,17,10
+Philadelphia Eagles,New York Giants,1,0,0,40,17
+Tennessee Titans,Jacksonville Jaguars,1,0,0,30,13
+San Diego Chargers,Oakland Raiders,1,0,0,24,16
+Minnesota Vikings,Green Bay Packers,1,0,0,38,26
+Carolina Panthers,Arizona Cardinals,1,0,0,34,21
+New Orleans Saints,Atlanta Falcons,1,0,0,35,27
+New England Patriots,Miami Dolphins,1,0,0,27,17
+Cincinnati Bengals,Baltimore Ravens,1,0,0,17,7
+Indianapolis Colts,Houston Texans,1,0,0,20,17
+Jacksonville Jaguars,Kansas City Chiefs,1,0,0,24,21
+Tampa Bay Buccaneers,Green Bay Packers,1,0,0,38,28
+Atlanta Falcons,Washington Redskins,1,0,0,31,17
+Arizona Cardinals,Chicago Bears,1,0,0,41,21
+New Orleans Saints,Carolina Panthers,1,0,0,30,20
+Seattle Seahawks,Detroit Lions,1,0,0,32,20
+Tennessee Titans,San Francisco 49ers,1,0,0,34,27
+San Diego Chargers,New York Giants,1,0,0,21,20
+Dallas Cowboys,Philadelphia Eagles,1,0,0,20,16
+Pittsburgh Steelers,Denver Broncos,1,0,0,28,10
+San Francisco 49ers,Chicago Bears,1,0,0,10,6
+New Orleans Saints,St. Louis Rams,1,0,0,28,23
+Jacksonville Jaguars,New York Jets,1,0,0,24,22
+Cincinnati Bengals,Pittsburgh Steelers,1,0,0,18,12
+Washington Redskins,Denver Broncos,1,0,0,27,17
+Tennessee Titans,Buffalo Bills,1,0,0,41,17
+Carolina Panthers,Atlanta Falcons,1,0,0,28,19
+Miami Dolphins,Tampa Bay Buccaneers,1,0,0,25,23
+Minnesota Vikings,Detroit Lions,1,0,0,27,10
+Kansas City Chiefs,Oakland Raiders,1,0,0,16,10
+Green Bay Packers,Dallas Cowboys,1,0,0,17,7
+San Diego Chargers,Philadelphia Eagles,1,0,0,31,23
+Arizona Cardinals,Seattle Seahawks,1,0,0,31,20
+Indianapolis Colts,New England Patriots,1,0,0,35,34
+Baltimore Ravens,Cleveland Browns,1,0,0,16,0
+Miami Dolphins,Carolina Panthers,1,0,0,24,17
+Kansas City Chiefs,Pittsburgh Steelers,1,0,0,27,24
+New Orleans Saints,Tampa Bay Buccaneers,1,0,0,38,7
+Detroit Lions,Cleveland Browns,1,0,0,38,37
+Green Bay Packers,San Francisco 49ers,1,0,0,30,24
+Indianapolis Colts,Baltimore Ravens,1,0,0,17,15
+New York Giants,Atlanta Falcons,1,0,0,34,31
+Dallas Cowboys,Washington Redskins,1,0,0,7,6
+Jacksonville Jaguars,Buffalo Bills,1,0,0,18,15
+Minnesota Vikings,Seattle Seahawks,1,0,0,35,9
+Arizona Cardinals,St. Louis Rams,1,0,0,21,13
+Oakland Raiders,Cincinnati Bengals,1,0,0,20,17
+San Diego Chargers,Denver Broncos,1,0,0,32,3
+New England Patriots,New York Jets,1,0,0,31,14
+Philadelphia Eagles,Chicago Bears,1,0,0,24,20
+Tennessee Titans,Houston Texans,1,0,0,20,17
+Green Bay Packers,Detroit Lions,1,0,0,34,12
+Dallas Cowboys,Oakland Raiders,1,0,0,24,7
+Denver Broncos,New York Giants,1,0,0,26,6
+Seattle Seahawks,St. Louis Rams,1,0,0,27,17
+Cincinnati Bengals,Cleveland Browns,1,0,0,16,7
+Indianapolis Colts,Houston Texans,1,0,0,35,27
+Buffalo Bills,Miami Dolphins,1,0,0,31,14
+New York Jets,Carolina Panthers,1,0,0,17,6
+Philadelphia Eagles,Washington Redskins,1,0,0,27,24
+Atlanta Falcons,Tampa Bay Buccaneers,1,0,0,20,17
+San Francisco 49ers,Jacksonville Jaguars,1,0,0,20,3
+San Diego Chargers,Kansas City Chiefs,1,0,0,43,14
+Tennessee Titans,Arizona Cardinals,1,0,0,20,17
+Minnesota Vikings,Chicago Bears,1,0,0,36,10
+Baltimore Ravens,Pittsburgh Steelers,1,0,0,20,17
+New Orleans Saints,New England Patriots,1,0,0,38,17
+New York Jets,Buffalo Bills,1,0,0,19,13
+Denver Broncos,Kansas City Chiefs,1,0,0,44,13
+Chicago Bears,St. Louis Rams,1,0,0,17,9
+Oakland Raiders,Pittsburgh Steelers,1,0,0,27,24
+Cincinnati Bengals,Detroit Lions,1,0,0,23,13
+Miami Dolphins,New England Patriots,1,0,0,22,21
+New Orleans Saints,Washington Redskins,1,0,0,33,30
+Indianapolis Colts,Tennessee Titans,1,0,0,27,17
+Jacksonville Jaguars,Houston Texans,1,0,0,23,18
+Carolina Panthers,Tampa Bay Buccaneers,1,0,0,16,6
+Philadelphia Eagles,Atlanta Falcons,1,0,0,34,7
+San Diego Chargers,Cleveland Browns,1,0,0,30,23
+New York Giants,Dallas Cowboys,1,0,0,31,24
+Seattle Seahawks,San Francisco 49ers,1,0,0,20,17
+Arizona Cardinals,Minnesota Vikings,1,0,0,30,17
+Green Bay Packers,Baltimore Ravens,1,0,0,27,14
+Cleveland Browns,Pittsburgh Steelers,1,0,0,13,6
+Buffalo Bills,Kansas City Chiefs,1,0,0,16,10
+New York Jets,Tampa Bay Buccaneers,1,0,0,26,3
+Baltimore Ravens,Detroit Lions,1,0,0,48,3
+New England Patriots,Carolina Panthers,1,0,0,20,10
+New Orleans Saints,Atlanta Falcons,1,0,0,26,23
+Green Bay Packers,Chicago Bears,1,0,0,21,14
+Indianapolis Colts,Denver Broncos,1,0,0,28,16
+Houston Texans,Seattle Seahawks,1,0,0,34,7
+Miami Dolphins,Jacksonville Jaguars,1,0,0,14,10
+Minnesota Vikings,Cincinnati Bengals,1,0,0,30,10
+Tennessee Titans,St. Louis Rams,1,0,0,47,7
+Washington Redskins,Oakland Raiders,1,0,0,34,13
+San Diego Chargers,Dallas Cowboys,1,0,0,20,17
+Philadelphia Eagles,New York Giants,1,0,0,45,38
+San Francisco 49ers,Arizona Cardinals,1,0,0,24,9
+Indianapolis Colts,Jacksonville Jaguars,1,0,0,35,31
+Dallas Cowboys,New Orleans Saints,1,0,0,24,17
+Houston Texans,St. Louis Rams,1,0,0,16,13
+Cleveland Browns,Kansas City Chiefs,1,0,0,41,34
+New England Patriots,Buffalo Bills,1,0,0,17,10
+Arizona Cardinals,Detroit Lions,1,0,0,31,24
+Tennessee Titans,Miami Dolphins,1,0,0,27,24
+Atlanta Falcons,New York Jets,1,0,0,10,7
+Oakland Raiders,Denver Broncos,1,0,0,20,19
+San Diego Chargers,Cincinnati Bengals,1,0,0,27,24
+Pittsburgh Steelers,Green Bay Packers,1,0,0,37,36
+Baltimore Ravens,Chicago Bears,1,0,0,31,7
+Philadelphia Eagles,San Francisco 49ers,1,0,0,27,13
+Tampa Bay Buccaneers,Seattle Seahawks,1,0,0,24,7
+Carolina Panthers,Minnesota Vikings,1,0,0,26,7
+New York Giants,Washington Redskins,1,0,0,45,12
+San Diego Chargers,Tennessee Titans,1,0,0,42,17
+Cleveland Browns,Oakland Raiders,1,0,0,23,9
+New England Patriots,Jacksonville Jaguars,1,0,0,35,7
+Houston Texans,Miami Dolphins,1,0,0,27,20
+Pittsburgh Steelers,Baltimore Ravens,1,0,0,23,20
+Green Bay Packers,Seattle Seahawks,1,0,0,48,10
+Atlanta Falcons,Buffalo Bills,1,0,0,31,3
+Cincinnati Bengals,Kansas City Chiefs,1,0,0,17,10
+Tampa Bay Buccaneers,New Orleans Saints,1,0,0,20,17
+Carolina Panthers,New York Giants,1,0,0,41,9
+San Francisco 49ers,Detroit Lions,1,0,0,20,6
+Arizona Cardinals,St. Louis Rams,1,0,0,31,10
+New York Jets,Indianapolis Colts,1,0,0,29,15
+Philadelphia Eagles,Denver Broncos,1,0,0,30,27
+Dallas Cowboys,Washington Redskins,1,0,0,17,0
+Chicago Bears,Minnesota Vikings,1,0,0,36,30
+San Francisco 49ers,St. Louis Rams,1,0,0,28,6
+Cleveland Browns,Jacksonville Jaguars,1,0,0,23,17
+Pittsburgh Steelers,Miami Dolphins,1,0,0,30,24
+Buffalo Bills,Indianapolis Colts,1,0,0,30,7
+Houston Texans,New England Patriots,1,0,0,34,27
+Atlanta Falcons,Tampa Bay Buccaneers,1,0,0,20,10
+Chicago Bears,Detroit Lions,1,0,0,37,23
+Carolina Panthers,New Orleans Saints,1,0,0,23,10
+Minnesota Vikings,New York Giants,1,0,0,44,7
+Kansas City Chiefs,Denver Broncos,1,0,0,44,24
+Dallas Cowboys,Philadelphia Eagles,1,0,0,24,0
+San Diego Chargers,Washington Redskins,1,0,0,23,20
+Baltimore Ravens,Oakland Raiders,1,0,0,21,13
+Green Bay Packers,Arizona Cardinals,1,0,0,33,7
+Tennessee Titans,Seattle Seahawks,1,0,0,17,13
+New York Jets,Cincinnati Bengals,1,0,0,37,0
