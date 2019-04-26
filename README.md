@@ -44,3 +44,5 @@ are currently simple versions of
 
 The package also provides some additional tools for working with ratings. 
 
+## How to use it 
+
