@@ -16,6 +16,10 @@ file = "../data/nfl_2009.csv"
 (nfl_ext_competitions,  nfl_ext_player_list) = read_results( file )
 nfl_ext_ratings = RatingsList( nfl_ext_player_list )
 
+file = "../data/small_netflix_eg.csv"
+(netflix_competitions,  netflix_player_list) = read_results( file )
+netflix_ratings = RatingsList( netflix_player_list )
+
 @testset "I/O" begin
     # @test_throws ErrorException SurrealFinite("1", [x1], [x0])
     # @test_throws DomainError convert(SurrealFinite, NaN )
@@ -28,14 +32,28 @@ end
     # see \"Whos's #1\", Langville and Meyer, p.11
     required_output = Dict{String,Float64}(
         "Duke"  => -24.8,
+        "Miami" =>  18.2,
         "UNC"   =>  -8.0,
         "UVA"   =>  -3.4,
-        "Miami" =>  18.2,
         "VT"    =>  18.0)
     for k in keys(required_output)
         @test abs(required_output[k] - massey_ratings.ratings[k]) < 1.0e-1
     end
-    
+
+    massey_ratings2 = update_ratings(UpdateMassey(),
+                                     netflix_ratings,
+                                     netflix_competitions)           
+    # see \"Whos's #1\", Langville and Meyer, Table 3.3, p.26
+    required_output = Dict{String,Float64}(
+        "M1" =>  0.65,
+        "M2" =>  1.01,
+        "M3" => -0.55,
+        "M4" => -1.11
+        )
+    for k in keys(required_output)
+        @test abs(required_output[k] - massey_ratings2.ratings[k]) < 1.0e-2
+    end
+   
 end
 
 @testset "Colley" begin
@@ -45,12 +63,42 @@ end
     # see \"Whos's #1\", Langville and Meyer, Tabl 3.1, p.23
     required_output = Dict{String,Float64}(
         "Duke"  => 0.21,
+        "Miami" => 0.79,
         "UNC"   => 0.50,
         "UVA"   => 0.36,
-        "Miami" => 0.79,
         "VT"    => 0.64)
     for k in keys(required_output)
         @test abs(required_output[k] - colley_ratings.ratings[k]) < 1.0e-2
+    end
+    
+    colley_ratings2 = update_ratings(UpdateColley(), netflix_ratings,
+                                     netflix_competitions)
+    # see \"Whos's #1\", Langville and Meyer, Table 3.3, p.26
+    required_output = Dict{String,Float64}(
+        "M1" =>  0.67,
+        "M2" =>  0.63,
+        "M3" =>  0.34,
+        "M4" =>  0.35
+        )
+    for k in keys(required_output)
+        @test abs(required_output[k] - colley_ratings2.ratings[k]) < 1.0e-2
+    end
+
+end
+
+@testset "MasseyColley" begin
+    massey_colley_ratings = update_ratings(UpdateMasseyColley(),
+                                           input_ratings,
+                                           input_competitions)           
+    # see \"Whos's #1\", Langville and Meyer, Tabl 3.2, p.25
+    required_output = Dict{String,Float64}(
+        "Duke"  => -17.7,
+        "Miami" =>  13.0,
+        "UNC"   =>  -5.7,
+        "UVA"   =>  -2.4,
+        "VT"    =>  12.9)
+    for k in keys(required_output)
+        @test abs(required_output[k] - massey_colley_ratings.ratings[k]) < 1.0e-1
     end
     
 end
@@ -99,13 +147,32 @@ end
     end
 end
 
+@testset "Revert" begin
+    colley_ratings = update_ratings(UpdateColley(),
+                                    input_ratings,
+                                    input_competitions)
+    r0 = 1.0
+    a = 0.25
+    revert_ratings = update_ratings(UpdateRevert(; r_base=r0, α=a),
+                                    colley_ratings)           
+    required_output = Dict{String,Float64}(
+        "Duke"  => 0.21*a + r0*(1-a),
+        "Miami" => 0.79*a + r0*(1-a),
+        "UNC"   => 0.50*a + r0*(1-a),
+        "UVA"   => 0.36*a + r0*(1-a),
+        "VT"    => 0.64*a + r0*(1-a))
+    for k in keys(required_output)
+        @test abs(required_output[k] - revert_ratings.ratings[k]) < 1.0e-2
+    end 
+end
+
 @testset "Elo" begin
     r0 = 0.0
     rule = UpdateElo(;r0 = r0, K = 32.0, θ=1000.0/log(10.0) )
     r = nfl_ext_ratings
     for i=1:size(nfl_ext_competitions,1)
         # apply Elo 1-by-1 to each result
-        r = update_ratings(rule, r, nfl_ext_competitions[ [i], :])           
+        r = update_ratings(rule, r, nfl_ext_competitions[ i:i, :])           
     end
     S = sort(collect(r.ratings), by = tuple -> last(tuple), rev=true)
     r_mean = mean(last.(S)) # should be close to r0 = 0.0
@@ -155,6 +222,47 @@ end
     
 end
 
-
-
-## MasseyColley, Table 3.2, p. 25
+@testset "Iterate" begin
+    r0 = 0.0
+    # nice way to say, do Elo line-by-line on the inputs
+    rule = UpdateIterate( UpdateElo(;r0 = r0, K = 32.0, θ=1000.0/log(10.0) ), 1)
+    iterate_ratings = update_ratings(rule, nfl_ext_ratings, nfl_ext_competitions)
+    # see \"Whos's #1\", Langville and Meyer, p.58
+    required_output = Dict{String,Float64}(
+   "New Orleans Saints" => 173.661, 
+   "Indianapolis Colts" => 170.331,
+   "San Diego Chargers" => 127.582,
+    "Minnesota Vikings" => 103.504, 
+       "Dallas Cowboys" => 89.1285,
+  "Philadelphia Eagles" => 69.5331,
+    "Green Bay Packers" => 67.8292, 
+    "Arizona Cardinals" => 53.227 , 
+        "New York Jets" => 50.1431, 
+ "New England Patriots" => 39.6328, 
+       "Houston Texans" => 33.9024, 
+   "Cincinnati Bengals" => 33.0116, 
+     "Baltimore Ravens" => 32.0826, 
+      "Atlanta Falcons" => 28.1178, 
+  "Pittsburgh Steelers" => 27.1246, 
+     "Tennessee Titans" => 13.2216, 
+    "Carolina Panthers" => 11.4745, 
+  "San Francisco 49ers" => -1.28445,
+      "New York Giants" => -5.3217, 
+       "Denver Broncos" => -11.1262,
+       "Miami Dolphins" => -26.7173,
+        "Chicago Bears" => -28.1416,
+ "Jacksonville Jaguars" => -36.2142,
+        "Buffalo Bills" => -53.3495,
+     "Cleveland Browns" => -74.6639,
+      "Oakland Raiders" => -83.3188,
+     "Seattle Seahawks" => -88.8452,
+   "Kansas City Chiefs" => -109.281,
+  "Washington Redskins" => -110.212,
+ "Tampa Bay Buccaneers" => -130.102,
+        "Detroit Lions" => -170.809,
+       "St. Louis Rams" => -194.119
+                                           )
+    for k in keys(required_output)
+        @test abs(required_output[k] - iterate_ratings.ratings[k]) < 1.0e-2
+    end
+end

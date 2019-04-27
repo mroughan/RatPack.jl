@@ -1,28 +1,17 @@
-# Elo update where K is constant, but distribution can be set (with constant parameters)
-#     Elo2 has logistic distribution, but allows varying K
-
-
+export UpdateElo
 
 """
     UpdateElo <: UpdateRule
 
- Update using standard Elo
+ Update using standard Elo where K is constant, but distribution can be set (with constant parameters)
+     Elo2 has logistic distribution, but allows varying K
 
-## Components
+## Parameters
 * `r0::Float64`: default rating
 * `K::Float64`: the value of the gain parameter (use Elo2 for variable K)
 * `dist::ContinuousUnivariateDistribution`: the model to use for performance as a function of rating, e.g, Normal or Logistic
 * the distribution can have its own parameters, e.g., `β::Float64`, the spread parameter for the Logistic
 
-## LateX
-``\\alpha = \\beta``
-
-## Examples
-```jldoctest
-julia> a = [1 2; 3 4]
-2×2 Array{Int64,2}:
- 1  2
- 3  4
 ```
 """
 struct UpdateElo <: UpdateRule

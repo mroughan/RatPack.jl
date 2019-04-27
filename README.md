@@ -18,7 +18,7 @@ underlying the ratings schemes here is that they be
 
 2. Based on performance relative to the field played against. That is,
    a player should get more credit for defeating stronger opponients,
-   where stronger here is with respect to the ratings themselves.
+   where stronger here is with respect to the ratings themselves; 
 
 3. Non-gameable. That is, you should not be able to arbitrarily
    improve your rating without an improvement in skill. For instance,
@@ -31,7 +31,9 @@ The goals of such ratings are related but somewhat varied and include:
 
 2. Predicting outcomes (e.g., for gambling or other reasons)
 
-3. 
+3. Providing rankings (for interests sake) of current players, historical players, or even between games.
+
+4. 
 
 One side note: there is a subtle distinction between "ratings" and
 "rankings". The latter is simply an ordering of players (or teams),
@@ -59,8 +61,14 @@ are currently simple versions of
 
 + Massey
 + Colley
++ Massey-Colley (the "Colleyized Massey method" of Langville and Meyer, p.25)
 + Elo
 + Keener
+
+Along with the utility update methods
+
++ Iterate (to iterate another method over a dataset)
++ Revert (to smooth ratings towards some fixed value)
 
 To add
 
@@ -84,3 +92,26 @@ Indeed the package also includes several test sets of data:
 
 The package is still under development, and as such the interfaces are
 still a moving target. Give me a few days. 
+
+There are a few data structures used
+
++ `RatingsList` a composite structure
++ `player_list::Dict{String,Int64}`
++  `results::DataFrame`
++ `UpdateRule` is an abstract type; the actual update rules are subtypes.
+
+There are three main functions you need
+
++ `update_ratings` reads in a `UpdateRule`, a `RatingsList` and a competition list and outputs 
++ `UpdateRule()` and its ilk are constructors for the update rules that let you set their particular parameters
++  `update_info` gives you information about an update rule
+
+The way to add a new update rule is to create a copy of one of the
+current updates (to use as a template) and fill in each of these bits.
+
+File formats
+
++ Ratings
++ Competitions
+
+Plenty of other bits and pieces

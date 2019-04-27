@@ -1,6 +1,8 @@
 module RatPack
 __precompile__(false)
 
+import Base: copy
+
 using StatsBase
 using Distributions
 using CategoricalArrays
@@ -33,6 +35,7 @@ struct RatingsList
 #    K::Dict{String, Float64}
 #    β::Dict{String, Float64}
 end
+copy(r::RatingsList) = RatingsList( r.n, r.players, r.ratings )
 
 function player_indexes( players::Array{String,1} )
     d = Dict{String, Int64}()
@@ -212,15 +215,23 @@ function update_ratings( rule::UpdateRule,
 end
 
 # actual instantiations of updates
+
+# batch update rules
 include("UpdateRules/Colley.jl")
 include("UpdateRules/Massey.jl")
+include("UpdateRules/MasseyColley.jl")
+# include("UpdateRules/ColleyMassey.jl") # this doesn't do well
 include("UpdateRules/KeenerScores.jl")
-
 # include("UpdateRules/MasseyAdv.jl")
 # include("UpdateRules/MasseyColley.jl")
 # include("UpdateRules/KeenerOutcomes.jl")
 
+# recursive update rules
+include("UpdateRules/Revert.jl")
 include("UpdateRules/Elo.jl")
+
+include("UpdateRules/Iterate.jl")
+
 
 
 # recursive versions of batch rules (or others), using exponential smoothing
