@@ -29,7 +29,6 @@ R4[3] = r
     @test append!(R1,R3) == R3
     @test R1.ratings[1,:] == R1[1]
     @test R4[2:2] == RatingsTable(r).ratings
-
 end
 
 file = "../data/nfl_2009_regular.csv"
@@ -284,4 +283,8 @@ end
     for k in keys(required_output)
         @test abs(required_output[k] - iterate_ratings.ratings[k]) < 1.0e-2
     end
+
+    R5 = RatingsTable( nfl_ext_ratings.players, size(nfl_ext_competitions,1) )
+    iterate_ratings = update_ratings(rule, nfl_ext_ratings, nfl_ext_competitions; record=R5)
+    
 end

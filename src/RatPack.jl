@@ -45,8 +45,9 @@ struct RatingsTable
     players::Array{String,1}    
     ratings::DataFrame 
 end
-copy(r::RatingsTable) = RatingsTable( R.players, R.ratings )
-size(r::RatingsTable) = size(R.ratings)
+copy(R::RatingsTable) = RatingsTable( R.players, R.ratings )
+size(R::RatingsTable) = size(R.ratings)
+size(R::RatingsTable, d) = size(R.ratings, d)
 function RatingsTable(players::Array{String,1})
     # create empty RatingsTable with players as names of columns
     m = length(players)

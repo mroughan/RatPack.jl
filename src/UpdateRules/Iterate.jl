@@ -37,19 +37,25 @@ end
 
 function update_ratings( rule::UpdateIterate,
                          input_ratings::RatingsList,
-                         input_competitions::DataFrame)
+                         input_competitions::DataFrame;
+                         record::Union{Missing,RatingsTable}=missing)
     n = size(input_competitions,1)
     m = length( input_ratings.players )
     I = player_indexes( input_ratings.players )
     r = copy(input_ratings)
-    
+
     # select a batch, and then update using the appropriate rule
     d = input_competitions # just an abbreviation
-    for i=1: rule.batch_size : n
+    for (j,i) = enumerate( 1 : rule.batch_size : n )
         start = i
         fin = min(n, i+rule.batch_size-1)
         rows = d[ start:fin, :]
         r = update_ratings(rule.rule, r, rows) 
+        if !ismissing(record) && size(record,1)>=j
+            record[j] = r # record results if required, and space allocated
+        elseif !ismissing(record)
+            println("Warn: out of space to record ratings: j=$j of $(size(record,1))")
+        end
     end
                           
     # output ratings list
