@@ -285,6 +285,6 @@ end
     end
 
     R5 = RatingsTable( nfl_ext_ratings.players, size(nfl_ext_competitions,1) )
-    iterate_ratings = update_ratings(rule, nfl_ext_ratings, nfl_ext_competitions; record=R5)
-    
+    iterate_ratings2 = update_ratings(rule, nfl_ext_ratings, nfl_ext_competitions; record=R5)
+    @test iterate_ratings2 == iterate_ratings
 end

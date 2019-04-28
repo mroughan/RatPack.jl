@@ -38,7 +38,7 @@ struct RatingsList
 end
 copy(r::RatingsList) = RatingsList( r.m, r.players, r.ratings )
 length(r::RatingsList) = r.m
-==(r1::RatingsList, r2::RatingsList) = (r1.m == r2.m) && (R1.players == R2.players) && (R1.ratings == R2.ratings)
+==(r1::RatingsList, r2::RatingsList) = (r1.m == r2.m) && (r1.players == r2.players) && (r1.ratings == r2.ratings)
 
 # construct a table to store a time-series of ratings in
 struct RatingsTable
