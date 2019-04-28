@@ -284,7 +284,10 @@ end
         @test abs(required_output[k] - iterate_ratings.ratings[k]) < 1.0e-2
     end
 
+    # check recording doesn't break anything
     R5 = RatingsTable( nfl_ext_ratings.players, size(nfl_ext_competitions,1) )
     iterate_ratings2 = update_ratings(rule, nfl_ext_ratings, nfl_ext_competitions; record=R5)
     @test iterate_ratings2 == iterate_ratings
+    @test R5[end:end] == RatingsTable(iterate_ratings2).ratings
 end
+

@@ -1,7 +1,7 @@
 module RatPack
 __precompile__(false)
 
-import Base: copy, push!, append!, insert!, getindex, setindex!, length, size, ==
+import Base: copy, push!, append!, insert!, getindex, setindex!, length, size, lastindex, ==
 
 using StatsBase
 using Distributions
@@ -15,7 +15,7 @@ export update_ratings, update_info, summarize, increment!, reset!, player_indexe
 export UpdateRule # parent abstract type for updates -- instantiations are exported in their own files
 export RatingsList, RatingsTable # main datastructures
 export PlayerA, PlayerB, Outcome, FactorA, FactorB, ScoreA, ScoreB # various useful symbol abbreviations
-export copy, push!, append!, insert!, getindex, setindex!, length, size, ==
+export copy, push!, append!, insert!, getindex, setindex!, length, size, lastindex, ==
 
 ## macro for argument checking
 ##   from Distributions.jl
@@ -48,6 +48,7 @@ end
 copy(R::RatingsTable) = RatingsTable( R.players, R.ratings )
 size(R::RatingsTable) = size(R.ratings)
 size(R::RatingsTable, d) = size(R.ratings, d)
+lastindex(R::RatingsTable) = size(R.ratings, 1)
 function RatingsTable(players::Array{String,1})
     # create empty RatingsTable with players as names of columns
     m = length(players)
