@@ -1,12 +1,36 @@
 using RatPack
 using Distributions
+using DataFrames
 using Test
+
+
+@testset "I/O" begin
+    # @test_throws ErrorException SurrealFinite("1", [x1], [x0])
+    # @test_throws DomainError convert(SurrealFinite, NaN )
+end
+
 
 # test case from "Whos's #1", Langville and Meyer
 file = "../data/test_competitions_1.csv"
 (input_competitions,  player_list) = read_results( file )
 summarize(input_competitions,  player_list)
 input_ratings = RatingsList( player_list )
+r = update_ratings(UpdateMassey(),
+                   input_ratings,
+                   input_competitions)
+
+R1 = RatingsTable(input_ratings.players) # empty
+R2 = RatingsTable(input_ratings)         # 1 row but now values
+R3 = RatingsTable(r)                     # 1 initialised row
+R4 = RatingsTable(r.players, 4)          # 4 uninitialised rows
+setindex!(R4, r, 2)
+R4[3] = r
+@testset "RatingsTable" begin
+    @test append!(R1,R3) == R3
+    @test R1.ratings[1,:] == R1[1]
+    @test R4[2:2] == RatingsTable(r).ratings
+
+end
 
 file = "../data/nfl_2009_regular.csv"
 (nfl_competitions,  nfl_player_list) = read_results( file )
@@ -20,15 +44,10 @@ file = "../data/small_netflix_eg.csv"
 (netflix_competitions,  netflix_player_list) = read_results( file )
 netflix_ratings = RatingsList( netflix_player_list )
 
-@testset "I/O" begin
-    # @test_throws ErrorException SurrealFinite("1", [x1], [x0])
-    # @test_throws DomainError convert(SurrealFinite, NaN )
-end
-
+massey_ratings = update_ratings(UpdateMassey(),
+                                input_ratings,
+                                input_competitions)
 @testset "Massey" begin
-    massey_ratings = update_ratings(UpdateMassey(),
-                                    input_ratings,
-                                    input_competitions)           
     # see \"Whos's #1\", Langville and Meyer, p.11
     required_output = Dict{String,Float64}(
         "Duke"  => -24.8,

@@ -1,7 +1,7 @@
 module RatPack
 __precompile__(false)
 
-import Base: copy
+import Base: copy, push!, append!, insert!, getindex, setindex!, length, size, ==
 
 using StatsBase
 using Distributions
@@ -10,11 +10,12 @@ using DataFrames
 using CSV
 using LinearAlgebra
 
-export check_ratings, convert_ratings, read_ratings, check_results, read_results
+export check_ratings, convert_ratings, read_ratings, check_results, read_results # I/O functions
 export update_ratings, update_info, summarize, increment!, reset!, player_indexes
-export UpdateRule, UpdateElo
-export RatingsList, Parameters
-export PlayerA, PlayerB, Outcome, FactorA, FactorB, ScoreA, ScoreB
+export UpdateRule # parent abstract type for updates -- instantiations are exported in their own files
+export RatingsList, RatingsTable # main datastructures
+export PlayerA, PlayerB, Outcome, FactorA, FactorB, ScoreA, ScoreB # various useful symbol abbreviations
+export copy, push!, append!, insert!, getindex, setindex!, length, size, ==
 
 ## macro for argument checking
 ##   from Distributions.jl
@@ -29,14 +30,64 @@ end
 
 ### ratings structures and associated functions
 struct RatingsList
-    n::Int64 # number of rated players
+    m::Int64 # number of rated players
     players::Array{String,1}
     ratings::Dict{String, Float64}
 #    K::Dict{String, Float64}
 #    β::Dict{String, Float64}
 end
-copy(r::RatingsList) = RatingsList( r.n, r.players, r.ratings )
+copy(r::RatingsList) = RatingsList( r.m, r.players, r.ratings )
+length(r::RatingsList) = r.m
+==(r1::RatingsList, r2::RatingsList) = (r1.m == r2.m) && (R1.players == R2.players) && (R1.ratings == R2.ratings)
 
+# construct a table to store a time-series of ratings in
+struct RatingsTable
+    players::Array{String,1}    
+    ratings::DataFrame 
+end
+copy(r::RatingsTable) = RatingsTable( R.players, R.ratings )
+size(r::RatingsTable) = size(R.ratings)
+function RatingsTable(players::Array{String,1})
+    # create empty RatingsTable with players as names of columns
+    m = length(players)
+    R = DataFrame( Union{Missing,Float64}, 0, m)
+    names!(R, Symbol.(players))
+    return RatingsTable(players, R)
+end
+function RatingsTable(players::Array{String,1}, n::Int)
+    # create empty RatingsTable with players as names of columns, and n empty rows
+    m = length(players)
+    R = DataFrame( Union{Missing,Float64}, n, m)
+    names!(R, Symbol.(players))
+    return RatingsTable(players, R)
+end
+function RatingsTable(r::RatingsList)
+    A = DataFrame( Union{Missing,Float64}, 1, r.m)
+    names!(A, Symbol.(r.players))
+    for k in keys(r.ratings)
+        A[ Symbol(k) ] = r.ratings[k]
+    end
+    return RatingsTable(r.players, A)
+end
+function append!(R1::RatingsTable, R2::RatingsTable)
+    append!(R1.ratings, R2.ratings)
+    return R1
+end
+function push!(R::RatingsTable, r::RatingsList)
+    x = RatingsTable(r)
+    append!(R, x)
+    return R
+end
+# function insert!(R::RatingsTable, i::Int, r::RatingsList) # insert a row into a existing RatingsTable    
+# end
+getindex(R::RatingsTable, i::Int) = R.ratings[i,:]
+getindex(R::RatingsTable, range::UnitRange{Int}) = R.ratings[range,:]
+function setindex!(R::RatingsTable, r::RatingsList, i::Int)
+    R.ratings[i,:] = RatingsTable(r).ratings
+end
+==(R1::RatingsTable, R2::RatingsTable) = (R1.players == R2.players) && (R1.ratings == R2.ratings)
+
+# get inverse mapping from an array of players to their indexes
 function player_indexes( players::Array{String,1} )
     d = Dict{String, Int64}()
     for i in 1:length(players)
@@ -46,7 +97,7 @@ function player_indexes( players::Array{String,1} )
 end
 player_indexes( R::RatingsList ) = player_indexes( R.players )
                
-# check you have a valid data frame
+# check you have a valid data frame for a set of ratings
 function check_ratings( df::DataFrame )
     # check it has the required columns with correct datatype
     if !haskey(df, :Players)
@@ -75,7 +126,15 @@ function convert(::Type{RatingsList}, df::DataFrame )
     return R
 end
 
-function convert(::Type{DataFrame}, R::RatingsList )
+# not finished
+function convert(::Type{DataFrame}, r::RatingsList )
+    m = length(R.players)
+    x = Array{Union{Missing, Float64}, 1}(undef, m)
+    for i=1:m
+        if haskey(r.ratings, R.players[i])
+            x[i] = r.ratings[ R.players[i] ]
+        end
+    end
     return 1
 end
 
