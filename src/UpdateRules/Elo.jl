@@ -32,14 +32,20 @@ default_θ = 400 / log(10) # this results in the standard values used for Elo in
 UpdateElo(;r0=1500.0, K=32.0, θ=default_θ) = UpdateElo( r0, K, Logistic(0.0, θ) )
 
 function update_info( rule::UpdateElo )
-    mode = "recursive" # alternatives: "batch", "recursive" 
-    input = "outcome"  # alternatives: "outcome", "score"
-    model = "single"   # single rating (alt: "offence/defence")
-    ties = true        # can it incorporate ties
-    factors = true     # can it include extra factors   
-    parameters = ["r0, default rating", "K, gain", "dist(), performance model"]
-    return mode, input, model, ties, facfors, parameters
+    info = Dict(
+                :name => "Elo",
+                :mode => "recursive",
+                :reference => "\"Whos's #1\", Langville and Meyer, p.?? and ??",
+                :input => "outcome", 
+                :output => "probabilistic",
+                :model => "single",   
+                :ties => true,        
+                :factors => true,     
+                :parameters => ["r0, default rating", "K, gain", "dist(), performance model"]
+                )
+    return info
 end
+update_info( ::Type{UpdateElo} ) =  update_info( UpdateElo() )
 
 function update_ratings( rule::UpdateElo,
                          input_ratings::RatingsList,

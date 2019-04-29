@@ -14,15 +14,18 @@ struct UpdateColley <: UpdateRule
 end
 
 function update_info( rule::UpdateColley )
-    name = "Colley"
-    reference = "\"Whos's #1\", Langville and Meyer, p.21"
-    mode = "batch"    # alternatives: "batch", "recursive" 
-    input = "outcome" # alternatives: "outcome", "score"
-    model = "single"  # alternatives: "single", "offence/defence"
-    ties = false      # can it incorporate ties
-    factors = false   # can it include extra factors
-    parameters = []
-    return name, reference, mode, input, model, ties, factors, parameters
+    info = Dict(
+                :name => "Colley",
+                :reference => "\"Whos's #1\", Langville and Meyer, p.21",
+                :mode => "batch",
+                :input => "outcome",
+                :output => "deterministic",
+                :model => "single",
+                :ties => false,
+                :factors => false,
+                :parameters => []
+                )
+    return info
 end
 update_info( ::Type{UpdateColley} ) =  update_info( UpdateColley() )
 

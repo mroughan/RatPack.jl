@@ -12,6 +12,7 @@ using LinearAlgebra
 
 export check_ratings, convert_ratings, read_ratings, check_results, read_results # I/O functions
 export update_ratings, update_info, summarize, increment!, reset!, player_indexes
+export update_rule_list, update_rule_names
 export UpdateRule # parent abstract type for updates -- instantiations are exported in their own files
 export RatingsList, RatingsTable # main datastructures
 export PlayerA, PlayerB, Outcome, FactorA, FactorB, ScoreA, ScoreB # various useful symbol abbreviations
@@ -276,27 +277,13 @@ function update_ratings( rule::UpdateRule,
 end
 
 # actual instantiations of updates
-
-# batch update rules
-include("UpdateRules/Colley.jl")
-include("UpdateRules/Massey.jl")
-include("UpdateRules/MasseyColley.jl")
-# include("UpdateRules/ColleyMassey.jl") # this doesn't do well
-include("UpdateRules/KeenerScores.jl")
-# include("UpdateRules/MasseyAdv.jl")
-# include("UpdateRules/MasseyColley.jl")
-# include("UpdateRules/KeenerOutcomes.jl")
-
-# recursive update rules
-include("UpdateRules/Revert.jl")
-include("UpdateRules/Elo.jl")
-
-include("UpdateRules/Iterate.jl")
-
-
-
-# recursive versions of batch rules (or others), using exponential smoothing
-#    construct these by building a "recursion" on existing rules
+update_rule_list = ["Colley", "Massey", "MasseyColley", "KeenerScores", "Revert", "Elo", "Iterate"]
+update_rule_names = Array{String,1}(undef,length(update_rule_list))
+for (i,u) in enumerate(update_rule_list)
+    u_file = "UpdateRules/$(u).jl"
+    include(u_file)
+    update_rule_names[i] = "Update$(u)"
+end
 
 
 # Revise.includet("UpdateRules/???.jl")

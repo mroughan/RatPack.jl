@@ -19,21 +19,27 @@ struct UpdateIterate <: UpdateRule
     batch_size::Int
     function UpdateIterate(rule::UpdateRule, batch_size::Int)
         @check_args(UpdateIterate, batch_size >= one(batch_size))
-        @check_args(UpdateIterate, update_info(rule)[1] == "recursive")
+        @check_args(UpdateIterate, update_info(rule)[:mode] == "recursive")
         new(rule, batch_size)
     end
 end
 UpdateIterate(;rule::UpdateRule=UpdateElo(), batch_size::Int=1 ) = UpdateIterate( rule, batch_size )
 
 function update_info( rule::UpdateIterate )
-    mode = "recursive" # alternatives: "batch", "recursive" 
-    input = update_info( rule.rule )[2] # inhereted from its update rule
-    model = update_info( rule.rule )[3] # inhereted from its update rule
-    ties = update_info( rule.rule )[4] # inhereted from its update rule
-    factors = update_info( rule.rule )[5] # inhereted from its update rule
-    parameters = append!( ["rule(=Elo)", "batch_size(=1)"], update_info( rule.rule )[6] )
-    return mode, input, model, ties, facfors, parameters
+    info = Dict(
+                :name => "Iterate",
+                :mode => "recursive", 
+                :reference => "none",
+                :input => update_info( rule.rule )[:input], 
+                :output => update_info( rule.rule )[:output],
+                :model => update_info( rule.rule )[:model], 
+                :ties => update_info( rule.rule )[:ties], 
+                :factors => update_info( rule.rule )[:factors], 
+                :parameters => append!( ["rule(=Elo)", "batch_size(=1)"], update_info( rule.rule )[6] )
+                )
+    return info
 end
+update_info( ::Type{UpdateIterate} ) =  error("Need to specify the sub-rule")
 
 function update_ratings( rule::UpdateIterate,
                          input_ratings::RatingsList,

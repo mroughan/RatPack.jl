@@ -24,15 +24,18 @@ end
 UpdateRevert(;r_base=1500.0, α=0.15) = UpdateRevert(r_base, α)
 
 function update_info( rule::UpdateRevert )
-    name = "Revert"
-    reference = "??? 538 "
-    mode = "recursive"# alternatives: "batch", "recursive" 
-    input = "none"    # competition outcomes are ignored
-    model = "single"  # alternatives: "single", "offence/defence" (could be "either")
-    ties = true       # scores based systems can incorporate ties
-    factors = false   # can it include extra factors
-    parameters = ["r_base", "α"]
-    return name, reference, mode, input, model, ties, factors, parameters
+    info = Dict(
+                :name => "Revert",
+                :mode => "recursive",
+                :reference => "Patterned after 538's approach to dealing with season changes: see ???",
+                :input => "none",
+                :output => "either",
+                :model => "single",
+                :ties => true,
+                :factors => false,
+                :parameters => ["r_base", "α"]
+                )
+    return info
 end
 update_info( ::Type{UpdateRevert} ) =  update_info( UpdateRevert() )
 

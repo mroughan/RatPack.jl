@@ -19,15 +19,18 @@ end
 UpdateKeenerScores(; skew=false, norm=true) = UpdateKeenerScores(skew, norm) # default no skew, but yes to normalisation
 
 function update_info( rule::UpdateKeenerScores )
-    name = "KeenerScores"
-    reference = "\"Whos's #1\", Langville and Meyer, p.29"
-    mode = "batch"    # alternatives: "batch", "recursive" 
-    input = "outcome" # alternatives: "outcome", "score"
-    model = "single"  # alternatives: "single", "offence/defence"
-    ties = true       # scores based systems incorporate ties
-    factors = false   # can it include extra factors
-    parameters = ["skew", "norm"]
-    return name, reference, mode, input, model, ties, factors, parameters
+    info = Dict(
+                :name => "KeenerScores",
+                :reference => "\"Whos's #1\", Langville and Meyer, p.29",
+                :mode => "batch",
+                :input => "outcome",
+                :output => "deterministic",
+                :model => "single",
+                :ties => true,
+                :factors => false,
+                :parameters => ["skew", "norm"]
+                )
+    return info
 end
 update_info( ::Type{UpdateKeenerScores} ) =  update_info( UpdateKeenerScores() )
 

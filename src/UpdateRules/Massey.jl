@@ -14,15 +14,18 @@ struct UpdateMassey <: UpdateRule
 end
 
 function update_info( rule::UpdateMassey )
-    name = "Massey"
-    reference = "\"Whos's #1\", Langville and Meyer, p.9"
-    mode = "batch"    # alternatives: "batch", "recursive" 
-    input = "score"   # alternatives: "outcome", "score"
-    model = "single"  # alternatives: "single", "offence/defence"
-    ties = true       # scores based systems can incorporate ties
-    factors = false   # can it include extra factors
-    parameters = []
-    return name, reference, mode, input, model, ties, factors, parameters
+    info = Dict(
+                :name => "Massey",
+                :reference => "\"Whos's #1\", Langville and Meyer, p.9",
+                :mode => "batch",
+                :input => "score",
+                :output => "deterministic",
+                :model => "single",
+                :ties => true,
+                :factors => false,
+                :parameters => []
+                )
+    return info
 end
 update_info( ::Type{UpdateMassey} ) =  update_info( UpdateMassey() )
 

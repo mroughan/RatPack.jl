@@ -3,6 +3,17 @@ using Distributions
 using DataFrames
 using Test
 
+@testset "Info" begin
+    for (i,u) in enumerate(update_rule_list)
+        if u != "Iterate"
+            nm = Meta.parse("Update$u()")
+            info_update_rule = :(update_info( $nm ) )
+            D = eval( info_update_rule )
+            # println("$u, $(D[:name])")
+            @test D[:name] == u
+        end
+    end
+end
 
 @testset "I/O" begin
     # @test_throws ErrorException SurrealFinite("1", [x1], [x0])
