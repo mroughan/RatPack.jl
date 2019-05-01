@@ -24,6 +24,10 @@ R4[3] = r
     @test R4[2:2] == RatingsTable(r).ratings
 end
 
+massey_ratings = update_ratings(UpdateMassey(),
+                                input_ratings,
+                                input_competitions)
+                                
 # test case from NFL season 2009 (see file for source, but also used in "Whos's #1", Langville and Meyer)
 #   this is the regular season, excluding playoffs
 file = "../data/nfl_2009_regular.csv"
@@ -48,6 +52,11 @@ netflix_ratings = RatingsList( netflix_player_list )
     @test (sort(summarize(input_competitions,  player_list), :Player) ==
            DataFrame(Player=["Duke","Miami","UNC","UVA","VT"], Record=["0/4","4/4","2/4","1/4","3/4"], ScoreDiff=[-124,91,-40,-17,90])
            )
+
+    test_out = "test_ratings.csv"
+    write_ratings( test_out,  massey_ratings)
+    df,r = read_ratings( test_out )
+    @test r == massey_ratings 
 end
 
 @testset "Info" begin
@@ -62,9 +71,6 @@ end
     end
 end
 
-massey_ratings = update_ratings(UpdateMassey(),
-                                input_ratings,
-                                input_competitions)
 @testset "Massey" begin
     # see \"Whos's #1\", Langville and Meyer, p.11
     required_output = Dict{String,Float64}(
@@ -316,6 +322,12 @@ end
     iterate_ratings2 = update_ratings(rule, nfl_ext_ratings, nfl_ext_competitions; record=R5)
     @test iterate_ratings2 == iterate_ratings
     @test R5[end:end] == RatingsTable(iterate_ratings2).ratings
+
+    # extra I/O question
+    test_out2 = "test_ratings_table_out.csv"
+    write_ratingstable( test_out2, R5 )
+    R7 = read_ratingstable( test_out2 )
+    @test R5 == R7
 
     # check it complains when you give invalid arguments
     @test_throws ArgumentError rule = UpdateIterate( UpdateColley(), 1)

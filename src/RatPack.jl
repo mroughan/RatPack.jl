@@ -10,7 +10,7 @@ using DataFrames
 using CSV
 using LinearAlgebra
 
-export check_ratings, convert_ratings, read_ratings, check_results, read_results # I/O functions
+export check_ratings, convert_ratings, read_ratings, write_ratings, check_results, read_results, read_ratingstable, write_ratingstable # I/O functions
 export update_ratings, update_info, summarize, increment!, reset!, player_indexes
 export update_rule_list, update_rule_names
 export UpdateRule # parent abstract type for updates -- instantiations are exported in their own files
