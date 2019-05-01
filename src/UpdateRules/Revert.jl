@@ -56,7 +56,7 @@ function update_ratings( rule::UpdateRevert,
     end
        
     # output ratings list
-    output_ratings = RatingsList(m, input_ratings.players, r )   
+    output_ratings = RatingsList(input_ratings.players, r )   
     return output_ratings
 end
 

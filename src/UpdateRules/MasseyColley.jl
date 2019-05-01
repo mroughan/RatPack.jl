@@ -60,6 +60,6 @@ function update_ratings( rule::UpdateMasseyColley,
     end
         
     # output ratings list
-    output_ratings = RatingsList(m, input_ratings.players, ratings )   
+    output_ratings = RatingsList(input_ratings.players, ratings )   
     return output_ratings
 end

@@ -49,7 +49,7 @@ function update_ratings( rule::UpdateIterate,
     n = size(input_competitions,1)
     m = length( input_ratings.players )
     I = player_indexes( input_ratings.players )
-    r = copy(input_ratings)
+    r = deepcopy(input_ratings)
 
     # select a batch, and then update using the appropriate rule
     d = input_competitions # just an abbreviation

@@ -77,11 +77,12 @@ function update_ratings( rule::UpdateElo,
     end
                           
     # output ratings list
-    output_ratings = RatingsList(m, input_ratings.players, new_r )   
+    output_ratings = RatingsList(input_ratings.players, new_r )   
     return output_ratings
 end
 
-function update( rule::UpdateElo, ratingA::Real, ratingB::Real, outcome::Real, factorA::Union{Missing,Real}, factorB::Union{Missing,Real})
+function update(rule::UpdateElo, ratingA::Real, ratingB::Real, outcome::Real,
+                factorA::Union{Missing,Real}, factorB::Union{Missing,Real})
     rating_diff = ratingA - ratingB
     factorA = coalesce(factorA, 0.0) # replace missing values with 0
     factorB = coalesce(factorB, 0.0) # replace missing values with 0

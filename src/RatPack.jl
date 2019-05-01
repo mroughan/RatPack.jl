@@ -31,15 +31,14 @@ end
 
 ### ratings structures and associated functions
 struct RatingsList
-    m::Int64 # number of rated players
-    players::Array{String,1}
+    players::Array{String,1} # names of players
     ratings::Dict{String, Float64}
 #    K::Dict{String, Float64}
 #    β::Dict{String, Float64}
 end
-copy(r::RatingsList) = RatingsList( r.m, r.players, r.ratings )
-length(r::RatingsList) = r.m
-==(r1::RatingsList, r2::RatingsList) = (r1.m == r2.m) && (r1.players == r2.players) && (r1.ratings == r2.ratings)
+copy(r::RatingsList) = RatingsList( r.players, r.ratings )
+length(r::RatingsList) = length(r.players)
+==(r1::RatingsList, r2::RatingsList) = (r1.players == r2.players) && (r1.ratings == r2.ratings)
 
 # construct a table to store a time-series of ratings in
 struct RatingsTable
@@ -65,7 +64,7 @@ function RatingsTable(players::Array{String,1}, n::Int)
     return RatingsTable(players, R)
 end
 function RatingsTable(r::RatingsList)
-    A = DataFrame( Union{Missing,Float64}, 1, r.m)
+    A = DataFrame( Union{Missing,Float64}, 1, length(r) )
     names!(A, Symbol.(r.players))
     for k in keys(r.ratings)
         A[ Symbol(k) ] = r.ratings[k]
@@ -122,8 +121,7 @@ end
 # convert the data frame into a RatingsList object
 function convert(::Type{RatingsList}, df::DataFrame )
     n = size(df,1)
-    R = RatingsList(n,
-                    df[:Players],
+    R = RatingsList(df[:Players],
                     Dict( [ df[r,:Players] => df[r,:Ratings] for r=findall( .!ismissing.(df[:,:Ratings])) ] )
                     )
     return R
@@ -212,7 +210,7 @@ end
 # create a blank ratings list from a list of players
 function RatingsList( player_list::Dict{String,Int64} )
     tmp = sort( collect( keys(player_list) ) )
-    return RatingsList( length(tmp), tmp, Dict{String, Int64}() )
+    return RatingsList( tmp, Dict{String, Int64}() )
 end
 
 function reset!( d::Dict{String, Int} )
@@ -253,8 +251,7 @@ function summarize( df::DataFrame,  player_list::Dict{String,Int64})
     return new_df
 end
 
-### Update calculations
-
+### Update calculation rules
 abstract type UpdateRule end
 
 
@@ -285,13 +282,5 @@ for (i,u) in enumerate(update_rule_list)
     update_rule_names[i] = "Update$(u)"
 end
 
-
-# Revise.includet("UpdateRules/???.jl")
-
-
-### wrapper functions 
-
-
- 
 
 end # module
