@@ -41,7 +41,8 @@ function update_info( rule::UpdateElo )
                 :model => "single",   
                 :ties => true,        
                 :factors => true,     
-                :parameters => ["r0, default rating", "K, gain", "dist(), performance model"]
+                :parameters => ["r0, default rating", "K, gain", "dist(), performance model"],
+                :record => false
                 )
     return info
 end

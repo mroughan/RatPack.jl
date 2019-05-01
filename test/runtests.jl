@@ -5,7 +5,7 @@ using Test
 
 @testset "Info" begin
     for (i,u) in enumerate(update_rule_list)
-        if u != "Iterate"
+        if u != "Iterate" && u != "SampleIterate"
             nm = Meta.parse("Update$u()")
             info_update_rule = :(update_info( $nm ) )
             D = eval( info_update_rule )
@@ -19,7 +19,6 @@ end
     # @test_throws ErrorException SurrealFinite("1", [x1], [x0])
     # @test_throws DomainError convert(SurrealFinite, NaN )
 end
-
 
 # test case from "Whos's #1", Langville and Meyer
 file = "../data/test_competitions_1.csv"
@@ -300,5 +299,17 @@ end
     iterate_ratings2 = update_ratings(rule, nfl_ext_ratings, nfl_ext_competitions; record=R5)
     @test iterate_ratings2 == iterate_ratings
     @test R5[end:end] == RatingsTable(iterate_ratings2).ratings
+end
+
+r0 = 0.0
+n_samples = 1000
+batch_size = 41
+rule = UpdateSampleIterate( rule=UpdateElo(;r0 = r0, K = 32.0, θ=1000.0/log(10.0) ),
+                            batch_size = batch_size,
+                            n_samples = n_samples)
+R6 = RatingsTable( nfl_ext_ratings.players, Int(ceil(n_samples/batch_size)) )
+sample_ratings = update_ratings(rule, nfl_ext_ratings, nfl_ext_competitions; record=R6)
+@testset "SampleIterate" begin
+    @test R6[end:end] == RatingsTable(sample_ratings).ratings
 end
 

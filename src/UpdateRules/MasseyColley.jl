@@ -24,7 +24,8 @@ function update_info( rule::UpdateMasseyColley )
                 :model => "single",
                 :ties => true,
                 :factors => false,
-                :parameters => []
+                :parameters => [],
+                :record => true
                 )
     return info
 end

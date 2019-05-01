@@ -23,7 +23,8 @@ function update_info( rule::UpdateMassey )
                 :model => "single",
                 :ties => true,
                 :factors => false,
-                :parameters => []
+                :parameters => [],
+                :record => true
                 )
     return info
 end

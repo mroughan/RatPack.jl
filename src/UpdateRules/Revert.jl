@@ -33,7 +33,8 @@ function update_info( rule::UpdateRevert )
                 :model => "single",
                 :ties => true,
                 :factors => false,
-                :parameters => ["r_base", "α"]
+                :parameters => ["r_base", "α"],
+                :record => true
                 )
     return info
 end

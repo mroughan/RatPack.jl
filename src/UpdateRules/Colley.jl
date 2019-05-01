@@ -23,7 +23,8 @@ function update_info( rule::UpdateColley )
                 :model => "single",
                 :ties => false,
                 :factors => false,
-                :parameters => []
+                :parameters => [],
+                :record => false
                 )
     return info
 end

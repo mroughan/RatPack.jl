@@ -28,7 +28,8 @@ function update_info( rule::UpdateKeenerScores )
                 :model => "single",
                 :ties => true,
                 :factors => false,
-                :parameters => ["skew", "norm"]
+                :parameters => ["skew", "norm"],
+                :record => true
                 )
     return info
 end
