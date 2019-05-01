@@ -3,23 +3,6 @@ using Distributions
 using DataFrames
 using Test
 
-@testset "Info" begin
-    for (i,u) in enumerate(update_rule_list)
-        if u != "Iterate" && u != "SampleIterate"
-            nm = Meta.parse("Update$u()")
-            info_update_rule = :(update_info( $nm ) )
-            D = eval( info_update_rule )
-            # println("$u, $(D[:name])")
-            @test D[:name] == u
-        end
-    end
-end
-
-@testset "I/O" begin
-    # @test_throws ErrorException SurrealFinite("1", [x1], [x0])
-    # @test_throws DomainError convert(SurrealFinite, NaN )
-end
-
 # test case from "Whos's #1", Langville and Meyer
 file = "../data/test_competitions_1.csv"
 (input_competitions,  player_list) = read_results( file )
@@ -35,23 +18,49 @@ R3 = RatingsTable(r)                     # 1 initialised row
 R4 = RatingsTable(r.players, 4)          # 4 uninitialised rows
 setindex!(R4, r, 2)
 R4[3] = r
-@testset "RatingsTable" begin
+@testset "RatingsTable structure" begin
     @test append!(R1,R3) == R3
     @test R1.ratings[1,:] == R1[1]
     @test R4[2:2] == RatingsTable(r).ratings
 end
 
+# test case from NFL season 2009 (see file for source, but also used in "Whos's #1", Langville and Meyer)
+#   this is the regular season, excluding playoffs
 file = "../data/nfl_2009_regular.csv"
 (nfl_competitions,  nfl_player_list) = read_results( file )
 nfl_ratings = RatingsList( nfl_player_list )
 
+#   this is the whole season, including playoffs
 file = "../data/nfl_2009.csv"
 (nfl_ext_competitions,  nfl_ext_player_list) = read_results( file )
 nfl_ext_ratings = RatingsList( nfl_ext_player_list )
 
+# small netflix-like example from "Whos's #1", Langville and Meyer
 file = "../data/small_netflix_eg.csv"
 (netflix_competitions,  netflix_player_list) = read_results( file )
 netflix_ratings = RatingsList( netflix_player_list )
+
+@testset "I/O" begin
+    @test_throws ArgumentError o = read_results( "test" )
+    # @test_throws ErrorException SurrealFinite("1", [x1], [x0])
+    # @test_throws DomainError convert(SurrealFinite, NaN )
+
+    @test (sort(summarize(input_competitions,  player_list), :Player) ==
+           DataFrame(Player=["Duke","Miami","UNC","UVA","VT"], Record=["0/4","4/4","2/4","1/4","3/4"], ScoreDiff=[-124,91,-40,-17,90])
+           )
+end
+
+@testset "Info" begin
+    for (i,u) in enumerate(update_rule_list)
+        if u != "Iterate" && u != "SampleIterate"
+            nm = Meta.parse("Update$u()")
+            info_update_rule = :(update_info( $nm ) )
+            D = eval( info_update_rule )
+            # println("$u, $(D[:name])")
+            @test D[:name] == u
+        end
+    end
+end
 
 massey_ratings = update_ratings(UpdateMassey(),
                                 input_ratings,
@@ -192,6 +201,10 @@ end
     for k in keys(required_output)
         @test abs(required_output[k] - revert_ratings.ratings[k]) < 1.0e-2
     end 
+
+    # check it complains when you give invalid arguments
+    @test_throws ArgumentError rule = UpdateRevert(α = -0.1)
+    @test_throws ArgumentError rule = UpdateRevert(α =  1.1)
 end
 
 @testset "Elo" begin
@@ -248,6 +261,10 @@ end
     # do a test for: K=32 weeks 1-15; K=16 weeks 16-17; K=64 for playoffs
     #  p.60-61
     
+
+    # check it complains when you give invalid arguments
+    @test_throws ArgumentError rule = UpdateElo(K = -1)
+    @test_throws ArgumentError rule = UpdateElo(θ = -1)
 end
 
 @testset "Iterate" begin
@@ -299,6 +316,10 @@ end
     iterate_ratings2 = update_ratings(rule, nfl_ext_ratings, nfl_ext_competitions; record=R5)
     @test iterate_ratings2 == iterate_ratings
     @test R5[end:end] == RatingsTable(iterate_ratings2).ratings
+
+    # check it complains when you give invalid arguments
+    @test_throws ArgumentError rule = UpdateIterate( UpdateColley(), 1)
+    @test_throws ArgumentError rule = UpdateIterate( UpdateElo(), 0)
 end
 
 r0 = 0.0
@@ -311,5 +332,10 @@ R6 = RatingsTable( nfl_ext_ratings.players, Int(ceil(n_samples/batch_size)) )
 sample_ratings = update_ratings(rule, nfl_ext_ratings, nfl_ext_competitions; record=R6)
 @testset "SampleIterate" begin
     @test R6[end:end] == RatingsTable(sample_ratings).ratings
+
+    # check it complains when you give invalid arguments
+    @test_throws ArgumentError rule = UpdateSampleIterate( UpdateColley(), 1, 0)
+    @test_throws ArgumentError rule = UpdateSampleIterate( UpdateElo(), 0, 0)
+    @test_throws ArgumentError rule = UpdateSampleIterate( UpdateElo(), 0, 1)
 end
 
