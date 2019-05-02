@@ -52,7 +52,7 @@ function update_ratings( rule::UpdateRule,
 end
 
 # actual instantiations of updates 
-update_rule_list = ["Colley", "Massey", "MasseyColley", "KeenerScores", "Revert", "Elo", "Iterate", "SampleIterate"]
+update_rule_list = ["Colley", "Massey", "MasseyColley", "KeenerScores", "Revert", "EloF", "Elo", "Iterate", "SampleIterate"]
 update_rule_names = Array{String,1}(undef,length(update_rule_list))
 for (i,u) in enumerate(update_rule_list)
     u_file = "UpdateRules/$(u).jl"

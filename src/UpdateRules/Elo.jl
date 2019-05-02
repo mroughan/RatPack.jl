@@ -71,7 +71,7 @@ function update_ratings( rule::UpdateElo,
         pB = d[i,PlayerB]
         old_rA = old_r[ pA ]
         old_rB = old_r[ pB ]
-        (rA, rB) = update( rule, old_rA, old_rB, d[i,Outcome], d[i,FactorA], d[i,FactorB])
+        (rA, rB) = update( rule, old_rA, old_rB, d[i,Outcome], 0.0, 0.0)
         new_r[ pA ] = rA
         new_r[ pB ] = rB
     end
@@ -81,12 +81,13 @@ function update_ratings( rule::UpdateElo,
     return output_ratings
 end
 
-function update(rule::UpdateElo, ratingA::Real, ratingB::Real, outcome::Real,
+function update(rule::Union{UpdateElo,UpdateEloF},
+                ratingA::Real, ratingB::Real, outcome::Real,
                 factorA::Union{Missing,Real}, factorB::Union{Missing,Real})
     rating_diff = ratingA - ratingB
-    factorA = coalesce(factorA, 0.0) # replace missing values with 0
-    factorB = coalesce(factorB, 0.0) # replace missing values with 0
-    factors = (factorA - factorB)*std(rule.dist) # this should also probably include a tunable parameter
+    factorA = coalesce(factorA, 0.0) # replace missing values with 0.0
+    factorB = coalesce(factorB, 0.0) # replace missing values with 0.0
+    factors = (factorA - factorB)
     expectedA = cdf( rule.dist,  rating_diff + factors )  # do these separately in case asymmetric distribution is chosen
     expectedB = cdf( rule.dist, -rating_diff - factors )  # do these separately in case asymmetric distribution is chosen
     outcomeA = (sign( outcome) + 1)/2

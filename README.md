@@ -57,12 +57,13 @@ to in the relevant piece of source code.
 
 The package aims to provide means to perform all of the standard, and
 some slightly non-standard ratings calculations. The supported systems
-are currently simple versions of 
+are currently:
 
 + Massey
 + Colley
 + Massey-Colley (the "Colleyized Massey method" of Langville and Meyer, p.25)
 + Elo
++ EloF (a version of Elo that allows factors such as home-ground advantage)
 + Keener
 
 Along with the utility update methods
@@ -115,3 +116,13 @@ File formats
 + Competitions
 
 Plenty of other bits and pieces
+
+
+## Additional tools
+
+### Simulating competitions
+
+
+### Generating players
+
+

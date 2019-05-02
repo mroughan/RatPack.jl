@@ -273,6 +273,66 @@ end
     @test_throws ArgumentError rule = UpdateElo(θ = -1)
 end
 
+@testset "EloF" begin
+    r0 = 0.0
+    rule = UpdateEloF(;r0 = r0, K = 32.0, θ=1000.0/log(10.0), factor_scale = 0.0 )
+    r = nfl_ext_ratings
+    for i=1:size(nfl_ext_competitions,1)
+        # apply Elo 1-by-1 to each result
+        r = update_ratings(rule, r, nfl_ext_competitions[ i:i, :])           
+    end
+    S = sort(collect(r.ratings), by = tuple -> last(tuple), rev=true)
+    r_mean = mean(last.(S)) # should be close to r0 = 0.0
+    @test abs(r0 - r_mean) < 1.0e-6
+    elo_ratings = r
+    # see \"Whos's #1\", Langville and Meyer, p.58
+    required_output = Dict{String,Float64}(
+   "New Orleans Saints" => 173.661, 
+   "Indianapolis Colts" => 170.331,
+   "San Diego Chargers" => 127.582,
+    "Minnesota Vikings" => 103.504, 
+       "Dallas Cowboys" => 89.1285,
+  "Philadelphia Eagles" => 69.5331,
+    "Green Bay Packers" => 67.8292, 
+    "Arizona Cardinals" => 53.227 , 
+        "New York Jets" => 50.1431, 
+ "New England Patriots" => 39.6328, 
+       "Houston Texans" => 33.9024, 
+   "Cincinnati Bengals" => 33.0116, 
+     "Baltimore Ravens" => 32.0826, 
+      "Atlanta Falcons" => 28.1178, 
+  "Pittsburgh Steelers" => 27.1246, 
+     "Tennessee Titans" => 13.2216, 
+    "Carolina Panthers" => 11.4745, 
+  "San Francisco 49ers" => -1.28445,
+      "New York Giants" => -5.3217, 
+       "Denver Broncos" => -11.1262,
+       "Miami Dolphins" => -26.7173,
+        "Chicago Bears" => -28.1416,
+ "Jacksonville Jaguars" => -36.2142,
+        "Buffalo Bills" => -53.3495,
+     "Cleveland Browns" => -74.6639,
+      "Oakland Raiders" => -83.3188,
+     "Seattle Seahawks" => -88.8452,
+   "Kansas City Chiefs" => -109.281,
+  "Washington Redskins" => -110.212,
+ "Tampa Bay Buccaneers" => -130.102,
+        "Detroit Lions" => -170.809,
+       "St. Louis Rams" => -194.119
+                                           )
+    for k in keys(required_output)
+        @test abs(required_output[k] - elo_ratings.ratings[k]) < 1.0e-2
+    end
+
+    # do a test where factors, e.g., home ground are important
+    
+
+    # check it complains when you give invalid arguments
+    @test_throws ArgumentError rule = UpdateEloF(K = -1)
+    @test_throws ArgumentError rule = UpdateEloF(θ = -1)
+    @test_throws ArgumentError rule = UpdateEloF(factor_scale = -1.0)
+end
+
 @testset "Iterate" begin
     r0 = 0.0
     # nice way to say, do Elo line-by-line on the inputs
