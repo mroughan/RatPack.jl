@@ -27,7 +27,13 @@ end
 massey_ratings = update_ratings(UpdateMassey(),
                                 input_ratings,
                                 input_competitions)
-                                
+
+# include home ground factor in the original case from  "Whos's #1", Langville and Meyer
+file2 = "../data/test_competitions_2.csv"
+(input_competitions2,  player_list2) = read_results( file2 )
+summarize(input_competitions2,  player_list2)
+input_ratings2 = RatingsList( player_list2 )
+
 # test case from NFL season 2009 (see file for source, but also used in "Whos's #1", Langville and Meyer)
 #   this is the regular season, excluding playoffs
 file = "../data/nfl_2009_regular.csv"
@@ -219,7 +225,7 @@ end
     r = nfl_ext_ratings
     for i=1:size(nfl_ext_competitions,1)
         # apply Elo 1-by-1 to each result
-        r = update_ratings(rule, r, nfl_ext_competitions[ i:i, :])           
+         r = update_ratings(rule, r, nfl_ext_competitions[ i:i, :])           
     end
     S = sort(collect(r.ratings), by = tuple -> last(tuple), rev=true)
     r_mean = mean(last.(S)) # should be close to r0 = 0.0
@@ -325,8 +331,16 @@ end
     end
 
     # do a test where factors, e.g., home ground are important
+    rule = UpdateEloF(;r0 = r0, K = 32.0, θ=1000.0/log(10.0), factor_scale=10.0 )
+    r = input_ratings2
+    for i=1:10
+        global r
+        r = update_ratings(rule,
+                           r,
+                           input_competitions2)
+    end
+    # check the output against something??? 
     
-
     # check it complains when you give invalid arguments
     @test_throws ArgumentError rule = UpdateEloF(K = -1)
     @test_throws ArgumentError rule = UpdateEloF(θ = -1)
