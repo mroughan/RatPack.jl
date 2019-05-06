@@ -334,7 +334,7 @@ end
     rule = UpdateEloF(;r0 = r0, K = 32.0, θ=1000.0/log(10.0), factor_scale=10.0 )
     r = input_ratings2
     for i=1:10
-        global r
+        r
         r = update_ratings(rule,
                            r,
                            input_competitions2)
@@ -425,3 +425,17 @@ sample_ratings = update_ratings(rule, nfl_ext_ratings, nfl_ext_competitions; rec
     @test_throws ArgumentError rule = UpdateSampleIterate( UpdateElo(), 0, 1)
 end
 
+@testset "Scoring" begin
+    # test normalised direction and score values
+    for (i,s) in enumerate(scoring_rule_names)
+        @testset "$s" begin
+            nm = Meta.parse("$s(;normalise=true)")
+            score_dir = :(score_direction( $nm ) )
+            @test eval( score_dir ) == 1
+            score_one = :(scoring_function( $nm, [0.0, 1.0], 2 ) )
+            @test abs( eval( score_one  ) - 1.0) < 1.0e-6
+            score_half = :(scoring_function( $nm, [0.5, 0.5], 2 ) )
+            @test abs( eval( score_half ) - 0.5) < 1.0e-6
+        end
+    end
+end

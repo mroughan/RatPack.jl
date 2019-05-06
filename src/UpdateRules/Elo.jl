@@ -84,12 +84,7 @@ end
 function update(rule::Union{UpdateElo,UpdateEloF},
                 ratingA::Real, ratingB::Real, outcome::Real,
                 factorA::Union{Missing,Real}, factorB::Union{Missing,Real})
-    rating_diff = ratingA - ratingB
-    factorA = coalesce(factorA, 0.0) # replace missing values with 0.0
-    factorB = coalesce(factorB, 0.0) # replace missing values with 0.0
-    factors = (factorA - factorB)
-    expectedA = cdf( rule.dist,  rating_diff + factors )  # do these separately in case asymmetric distribution is chosen
-    expectedB = cdf( rule.dist, -rating_diff - factors )  # do these separately in case asymmetric distribution is chosen
+    (expectedA, expectedB, tie) = predict_outcome(rule,  ratingA, ratingB, factorA, factorB)
     outcomeA = (sign( outcome) + 1)/2
     outcomeB = (sign(-outcome) + 1)/2
     rA = ratingA + rule.K*( outcomeA - expectedA )
@@ -97,3 +92,15 @@ function update(rule::Union{UpdateElo,UpdateEloF},
     return rA, rB
 end
 
+function predict_outcome(rule::Union{UpdateElo,UpdateEloF},
+                         ratingA::Real, ratingB::Real, 
+                         factorA::Union{Missing,Real}, factorB::Union{Missing,Real})
+    rating_diff = ratingA - ratingB
+    factorA = coalesce(factorA, 0.0) # replace missing values with 0.0
+    factorB = coalesce(factorB, 0.0) # replace missing values with 0.0
+    factors = (factorA - factorB)
+    expectedA = cdf( rule.dist,  rating_diff + factors )  # do these separately in case asymmetric distribution is chosen
+    expectedB = cdf( rule.dist, -rating_diff - factors )  # do these separately in case asymmetric distribution is chosen
+    # at present no model for ties
+    return (expectedA, expectedB, 0.0 )
+end
