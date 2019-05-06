@@ -11,7 +11,7 @@ export ScoreBrier
 
 ## Parameters
 * `normalise::false`: if true, normalise scores so that for binary choice
-     + S( [0.5,0.5], 1) = 0.5
+     + S( [0.5,0.5], 1) = 0.0
      + S( [0.0,1.0], 1) = 1.0
 
 ```
@@ -41,7 +41,7 @@ function scoring_function(srule::ScoreBrier, predicted_probabilities::Array{Floa
     e_i[outcome] = 1.0
     result = sum( (predicted_probabilities - e_i).^2 )
     if srule.normalise
-        return 1-result
+        return 1-2*result
     else
         return result
     end

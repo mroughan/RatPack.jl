@@ -188,8 +188,7 @@ function scoring_function(srule::ScoringRule, predicted_probabilities::Array{Flo
 end
 
 # actual instantiations of simulation rules 
-# scoring_rule_list = ["Quadratic", "Spherical"]
-scoring_rule_list = ["Brier", "Logarithmic"]
+scoring_rule_list = ["Brier", "Logarithmic", "Quadratic", "Spherical"]
 scoring_rule_names = Array{String,1}(undef,length(scoring_rule_list))
 for (i,u) in enumerate(scoring_rule_list)
     u_file = "ScoringRule/$(u).jl"

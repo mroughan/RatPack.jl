@@ -435,7 +435,7 @@ end
             score_one = :(scoring_function( $nm, [0.0, 1.0], 2 ) )
             @test abs( eval( score_one  ) - 1.0) < 1.0e-6
             score_half = :(scoring_function( $nm, [0.5, 0.5], 2 ) )
-            @test abs( eval( score_half ) - 0.5) < 1.0e-6
+            @test abs( eval( score_half ) - 0.0) < 1.0e-6
         end
     end
 end

@@ -11,7 +11,7 @@ export ScoreLogarithmic
 
 ## Parameters
 * `normalise::false`: if true, normalise scores so that for binary choice
-     + S( [0.5,0.5], 1) = 0.5
+     + S( [0.5,0.5], 1) = 0.0
      + S( [0.0,1.0], 1) = 1.0
 
 ```
@@ -30,7 +30,7 @@ function scoring_function(srule::ScoreLogarithmic, predicted_probabilities::Arra
         error("probabilities must sum to 1")
     end
     if srule.normalise
-        return 1.0 + log( predicted_probabilities[outcome] )/(2.0*log(2))
+        return 1.0 + log( predicted_probabilities[outcome] )/log(2)
     else
         return log( predicted_probabilities[outcome] )
     end
