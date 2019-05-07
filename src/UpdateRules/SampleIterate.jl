@@ -39,7 +39,7 @@ function update_info( rule::UpdateSampleIterate )
                 :model => update_info( rule.rule )[:model], 
                 :ties => update_info( rule.rule )[:ties], 
                 :factors => update_info( rule.rule )[:factors], 
-                :parameters => append!( ["rule(=Elo)", "batch_size(=1)"], update_info( rule.rule )[6] ),
+                :parameters => append!( ["rule(=Elo)", "batch_size(=1)"], update_info( rule.rule )[:parameters] ),
                 :record => true
                 )
     return info

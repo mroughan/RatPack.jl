@@ -27,13 +27,13 @@ underlying the ratings schemes here is that they be
 
 The goals of such ratings are related but somewhat varied and include:
 
-1. Matchmaking (pitting similar players against each other)
+1. Matchmaking (pitting similar players against each other).
 
-2. Predicting outcomes (e.g., for gambling or other reasons)
+2. Predicting outcomes (e.g., for gambling or other reasons).
 
 3. Providing rankings (for interests sake) of current players, historical players, or even between games.
 
-4. 
+4. Encouraging play (players need to play to improve their standing).
 
 One side note: there is a subtle distinction between "ratings" and
 "rankings". The latter is simply an ordering of players (or teams),

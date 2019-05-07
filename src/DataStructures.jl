@@ -66,21 +66,21 @@ lastindex(R::RatingsTable) = size(R.ratings, 1)
 
 # create empty RatingsTable with players as names of columns
 function RatingsTable(players::Array{String,1})
-    R = DataFrame( Union{Missing,Float64}, 0, length(players))
+    R = DataFrame( Matrix{Union{Missing,Float64}}(undef, 0, length(players)) )
     names!(R, Symbol.(players))
     return RatingsTable(players, R)
 end
 
 # create empty RatingsTable with players as names of columns, and n empty rows
 function RatingsTable(players::Array{String,1}, n::Int)
-    R = DataFrame( Union{Missing,Float64}, n, length(players))
+    R = DataFrame( Matrix{Union{Missing,Float64}}(undef, n, length(players)) )
     names!(R, Symbol.(players))
     return RatingsTable(players, R)
 end
 
 # create a RatingsTable from a RatingsList (with same players, and one row giving the set ratings)
 function RatingsTable(r::RatingsList)
-    A = DataFrame( Union{Missing,Float64}, 1, length(r) )
+    A = DataFrame( Matrix{Union{Missing,Float64}}(undef, 1, length(r)) )
     names!(A, Symbol.(r.players))
     for k in keys(r.ratings)
         A[ Symbol(k) ] = r.ratings[k]

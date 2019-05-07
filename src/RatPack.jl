@@ -69,7 +69,11 @@ end
 function predict_outcome(rule::UpdateRule,
                          ratingA::Real, ratingB::Real, 
                          factorA::Union{Missing,Real}, factorB::Union{Missing,Real} )
-    error("undefined prediction rule") # this is the default that is called with a prediction rule isn't defined
+    if update_info(rule)[:input] != "outcome"
+        error("the $rule update doesn't predict outcomes")
+    else
+        error("the $rule update doesn't have a prediction function")
+    end
 end
 
 # actual instantiations of updates 

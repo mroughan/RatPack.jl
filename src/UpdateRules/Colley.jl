@@ -68,3 +68,18 @@ function update_ratings( rule::UpdateColley,
     output_ratings = RatingsList(input_ratings.players, ratings )   
     return output_ratings
 end
+
+# Colley's predictions are deterministic, unless you apply some model after the fact
+function predict_outcome(rule::UpdateColley,
+                         ratingA::Real, ratingB::Real, 
+                         factorA::Union{Missing,Real}, factorB::Union{Missing,Real})
+    rating_diff = ratingA - ratingB
+    s = sign(rating_diff)
+    if s==1
+        return (1.0, 0.0, 0.0)
+    elseif s==-1
+        return (0.0, 1.0, 0.0)
+    else
+        return (0.0, 0.0, 1.0)
+    end
+end

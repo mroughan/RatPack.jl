@@ -439,3 +439,26 @@ end
         end
     end
 end
+
+@testset "Predict" begin
+    @testset "   outcomes" begin
+        # cases that can predict outcome
+        @test all( predict_outcome(UpdateElo(), 1.0, 1.0, missing, missing) .== (0.5, 0.5, 0.0) )
+        @test all( predict_outcome(UpdateEloF(), 1.0, 1.0, missing, missing) .== (0.5, 0.5, 0.0) )
+        @test all( predict_outcome(UpdateColley(), 1.0, 1.0, missing, missing) .== (0.0, 0.0, 1.0) )
+        
+        # cases based on score, not outcome
+        @test_throws ErrorException predict_outcome(UpdateMassey(), 1.0, 1.0, missing, missing)
+        @test_throws ErrorException predict_outcome(UpdateMasseyColley(), 1.0, 1.0, missing, missing)
+        @test_throws ErrorException predict_outcome(UpdateKeenerScores(), 1.0, 1.0, missing, missing)
+        
+        # cases that don't have a predictive model 
+        @test_throws ErrorException predict_outcome(UpdateRevert(), 1.0, 1.0, missing, missing)
+        @test_throws ErrorException predict_outcome(UpdateIterate(), 1.0, 1.0, missing, missing)
+        @test_throws ErrorException predict_outcome(UpdateSampleIterate(), 1.0, 1.0, missing, missing)
+    end
+
+    @testset "   margin" begin
+        # not implemented yet
+    end
+end

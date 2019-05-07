@@ -5,3 +5,4 @@ DataFrames
 CSV
 CategoricalArrays
 LinearAlgebra
+Random
