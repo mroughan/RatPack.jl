@@ -22,7 +22,7 @@ SimRoundRobin(; n::Int=1) = SimRoundRobin(n)
 function simulate( r::RatingsList, model::SimRoundRobin, perf_model::ContinuousUnivariateDistribution )
     m = length( r.players )
     L = Int( m*(m-1)/2 )
-    df = DataFrame([String, String, Int, Int, Int], [PlayerA, PlayerB, Outcome, ScoreA, ScoreB], model.n*L)
+    df = DataFrame([String, String, Int, Int, Int, Union{Missing,Int}, Union{Missing,Int}], [PlayerA, PlayerB, Outcome, ScoreA, ScoreB, FactorA, FactorB], model.n*L)
     wins = Dict{String, Int}()
     
     # simulate all players playing each other once per round
@@ -34,6 +34,8 @@ function simulate( r::RatingsList, model::SimRoundRobin, perf_model::ContinuousU
                 pB = r.players[k]
                 df[c, PlayerA] = pA
                 df[c, PlayerB] = pB
+                df[c, FactorA] = missing
+                df[c, FactorB] = missing
                 o = outcome( r.ratings[pA], r.ratings[pB],  perf_model )
                 df[c, Outcome] = o
                 if o == 1
@@ -57,6 +59,7 @@ function simulate( r::RatingsList, model::SimRoundRobin, perf_model::ContinuousU
 end
 
 # random outcome of a single match
+#   should be able to push this into a single instantiation, or corresponding update rule?
 function outcome( rA::Float64, rB::Float64, perf_model::ContinuousUnivariateDistribution)
     p = cdf( perf_model, rA - rB )
     x = rand()

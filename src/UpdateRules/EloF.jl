@@ -77,9 +77,9 @@ function update_ratings( rule::UpdateEloF,
         pB = d[i,PlayerB]
         old_rA = old_r[ pA ]
         old_rB = old_r[ pB ]
-        (rA, rB) = update( rule, old_rA, old_rB, d[i,Outcome], rule.factor_scale*d[i,FactorA], rule.factor_scale*d[i,FactorB])
-        new_r[ pA ] = rA
-        new_r[ pB ] = rB
+        (ΔrA, ΔrB) = update( rule, old_rA, old_rB, d[i,Outcome], rule.factor_scale*d[i,FactorA], rule.factor_scale*d[i,FactorB])
+        new_r[ pA ] += ΔrA
+        new_r[ pB ] += ΔrB
     end
                           
     # output ratings list

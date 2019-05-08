@@ -334,7 +334,6 @@ end
     rule = UpdateEloF(;r0 = r0, K = 32.0, θ=1000.0/log(10.0), factor_scale=10.0 )
     r = input_ratings2
     for i=1:10
-        r
         r = update_ratings(rule,
                            r,
                            input_competitions2)
@@ -446,16 +445,18 @@ end
         @test all( predict_outcome(UpdateElo(), 1.0, 1.0, missing, missing) .== (0.5, 0.5, 0.0) )
         @test all( predict_outcome(UpdateEloF(), 1.0, 1.0, missing, missing) .== (0.5, 0.5, 0.0) )
         @test all( predict_outcome(UpdateColley(), 1.0, 1.0, missing, missing) .== (0.0, 0.0, 1.0) )
-        
+
+        # case that use a sub-rule for prediction (default is Elo)
+        @test all( predict_outcome(UpdateIterate(), 1.0, 1.0, missing, missing) .== (0.5, 0.5, 0.0) )
+        @test all( predict_outcome(UpdateSampleIterate(), 1.0, 1.0, missing, missing) .== (0.5, 0.5, 0.0) )
+
         # cases based on score, not outcome
         @test_throws ErrorException predict_outcome(UpdateMassey(), 1.0, 1.0, missing, missing)
         @test_throws ErrorException predict_outcome(UpdateMasseyColley(), 1.0, 1.0, missing, missing)
         @test_throws ErrorException predict_outcome(UpdateKeenerScores(), 1.0, 1.0, missing, missing)
-        
+ 
         # cases that don't have a predictive model 
         @test_throws ErrorException predict_outcome(UpdateRevert(), 1.0, 1.0, missing, missing)
-        @test_throws ErrorException predict_outcome(UpdateIterate(), 1.0, 1.0, missing, missing)
-        @test_throws ErrorException predict_outcome(UpdateSampleIterate(), 1.0, 1.0, missing, missing)
     end
 
     @testset "   margin" begin

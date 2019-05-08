@@ -11,9 +11,13 @@ macro check_args(D, cond)
 end
 
 # set all keys of a dictionary to zero
-function reset!( d::Dict )
+function reset!( d::Dict; z0=missing )
     for k in keys(d)
-        d[k] = zero(typeof(d[k]))
+        if ismissing(z0)
+            d[k] = zero(typeof(d[k]))
+        else
+            d[k] = z0
+        end
     end
 end
 

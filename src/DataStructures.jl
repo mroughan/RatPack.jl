@@ -78,7 +78,7 @@ function RatingsTable(players::Array{String,1}, n::Int)
     return RatingsTable(players, R)
 end
 
-# create a RatingsTable from a RatingsList (with same players, and one row giving the set ratings)
+# create a RatingsTable from a RatingsList (with same players, and one row giving the input ratings)
 function RatingsTable(r::RatingsList)
     A = DataFrame( Matrix{Union{Missing,Float64}}(undef, 1, length(r)) )
     names!(A, Symbol.(r.players))
@@ -88,7 +88,7 @@ function RatingsTable(r::RatingsList)
     return RatingsTable(r.players, A)
 end
 
-# append one RatingsTable onto another
+# append one RatingsTable onto another (they must have matching players lists)
 function append!(R1::RatingsTable, R2::RatingsTable)
     append!(R1.ratings, R2.ratings)
     return R1
@@ -106,7 +106,7 @@ end
 
 # insert a row into a RatingsTable from a ratings list -- not sure if this is needed?
 # function insert!(R::RatingsTable, i::Int, r::RatingsList) # insert a row into a existing RatingsTable
-#    
+#    not implemented as I haven't needed it yet
 # end
 
 # address rows of a RatingsTable

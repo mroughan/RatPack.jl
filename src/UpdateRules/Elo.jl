@@ -71,9 +71,9 @@ function update_ratings( rule::UpdateElo,
         pB = d[i,PlayerB]
         old_rA = old_r[ pA ]
         old_rB = old_r[ pB ]
-        (rA, rB) = update( rule, old_rA, old_rB, d[i,Outcome], 0.0, 0.0)
-        new_r[ pA ] = rA
-        new_r[ pB ] = rB
+        (ΔrA, ΔrB) = update( rule, old_rA, old_rB, d[i,Outcome], missing, missing)
+        new_r[ pA ] += ΔrA
+        new_r[ pB ] += ΔrB
     end
                           
     # output ratings list
@@ -87,9 +87,9 @@ function update(rule::Union{UpdateElo,UpdateEloF},
     (expectedA, expectedB, tie) = predict_outcome(rule,  ratingA, ratingB, factorA, factorB)
     outcomeA = (sign( outcome) + 1)/2
     outcomeB = (sign(-outcome) + 1)/2
-    rA = ratingA + rule.K*( outcomeA - expectedA )
-    rB = ratingB + rule.K*( outcomeB - expectedB )
-    return rA, rB
+    ΔrA = rule.K*( outcomeA - expectedA )
+    ΔrB = rule.K*( outcomeB - expectedB )
+    return ΔrA, ΔrB
 end
 
 function predict_outcome(rule::Union{UpdateElo,UpdateEloF},
@@ -104,3 +104,9 @@ function predict_outcome(rule::Union{UpdateElo,UpdateEloF},
     # at present no model for ties
     return (expectedA, expectedB, 0.0 )
 end
+
+# function simulate_outcome(rule::Union{UpdateElo,UpdateEloF},
+#                           ratingA::Real, ratingB::Real, 
+#                           factorA::Union{Missing,Real}, factorB::Union{Missing,Real})
+#     (expectedA, expectedB, tie ) = predict_outcome(rule, ratingA, ratingB, factorA, factorB)
+# end

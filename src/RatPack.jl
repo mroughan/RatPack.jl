@@ -17,9 +17,10 @@ export update_rule_list, update_rule_names, simulate_rule_list, simulate_rule_na
 export UpdateRule, SimulateRule, GenerateRule, ScoringRule # parent abstract types -- instantiations are exported in their own files
 export RatingsList, RatingsTable # main datastructures
 export simulate, generate # simulation tools
-export score, scoring_function, score_direction
+export score_ratings, scoring_function, score_direction
 export PlayerA, PlayerB, Outcome, FactorA, FactorB, ScoreA, ScoreB # various useful symbol abbreviations
 export copy, push!, append!, insert!, getindex, setindex!, length, size, lastindex, ==
+export cross_validate, optimise # higher-level wrapper functions
 
 ### Main data structures used here
 include("DataStructures.jl")
@@ -147,16 +148,26 @@ abstract type ScoringRule end
 
 ```
 """
-function score(srule::ScoringRule, outcomes::DataFrame, rule::UpdateRule, r::RatingsList)
+function score_ratings(srule::ScoringRule, outcomes::DataFrame, rule::UpdateRule, r::RatingsList)
     total_score = 0.0
     for i=1:size(outcomes,1)
         # form the predictions from the update rule's prediction function
+        out_prob = predict_outcome(rule,
+                                   r.ratings[outcomes[i,PlayerA]], r.ratings[outcomes[i,PlayerB]],
+                                   outcomes[i,FactorA], outcomes[i,FactorB])
         
-        # calculate average score over all contests
-        
+        # add scores over all contests
+        o = outcomes[i,Outcome]
+        if o==-1
+            o = 2
+        elseif o==0
+            o = 3
+        end
+        total_score += scoring_function(srule, out_prob, o)
     end
+    av_score = total_score/size(outcomes,1)
     
-    return total_score
+    return av_score
 end
 
 """
@@ -191,14 +202,21 @@ function scoring_function(srule::ScoringRule, predicted_probabilities::Array{Flo
     error("undefined generation rule") # this is the default that is called with scoring function that isn't properly defined
 end
 
+function scoring_function(srule::ScoringRule, predicted_probabilities::Tuple, outcome::Int)
+    return scoring_function(srule, [x for x in predicted_probabilities], outcome)
+end
+
 # actual instantiations of simulation rules 
 scoring_rule_list = ["Brier", "Logarithmic", "Quadratic", "Spherical"]
 scoring_rule_names = Array{String,1}(undef,length(scoring_rule_list))
 for (i,u) in enumerate(scoring_rule_list)
-    u_file = "ScoringRule/$(u).jl"
+    u_file = "ScoringRules/$(u).jl"
     include(u_file)
     scoring_rule_names[i] = "Score$(u)"
 end
+
+### Wrapper functions
+include("Wrappers.jl")
 
 
 end # module

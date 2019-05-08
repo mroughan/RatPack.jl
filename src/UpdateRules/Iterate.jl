@@ -35,7 +35,7 @@ function update_info( rule::UpdateIterate )
                 :model => update_info( rule.rule )[:model], 
                 :ties => update_info( rule.rule )[:ties], 
                 :factors => update_info( rule.rule )[:factors], 
-                :parameters => append!( ["rule(=Elo)", "batch_size(=1)"], update_info( rule.rule )[:parameters] ),
+                :parameters => append!( ["rule(default=Elo)", "batch_size(default=1)"], update_info( rule.rule )[:parameters] ),
                 :record => true
                 )
     return info
@@ -69,3 +69,8 @@ function update_ratings( rule::UpdateIterate,
     return r
 end
 
+function predict_outcome(rule::UpdateIterate,
+                         ratingA::Real, ratingB::Real, 
+                         factorA::Union{Missing,Real}, factorB::Union{Missing,Real})
+    return predict_outcome(rule.rule, ratingA, ratingB, factorA, factorB)
+end
