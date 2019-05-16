@@ -173,43 +173,56 @@ Many don't come with adequate testing or validation.
 
 ### Open Source
 
-+ *R* `PlayerRatings` (see []()). Implements variants of Elo
++ **R** `PlayerRatings` (see []()). Implements variants of Elo
   (standard, FIDE) Glicko, Glicko2 and Stephenson and has a few routines for
   calculating parameters (the K factor). 
 
-+ *R* `elo` (see [CRAN](https://cran.r-project.org/web/packages/elo/vignettes/elo.html) and [GitHub](https://github.com/eheinzen/elo) ). Implements Elo. 
++ **R** `elo` (see [CRAN](https://cran.r-project.org/web/packages/elo/vignettes/elo.html) and [GitHub](https://github.com/eheinzen/elo) ). Implements Elo. 
 
-+ *R* `elo` (see [elo](https://rdrr.io/cran/elo/)). Implements Elo.
++ **R** `elo` (see [elo](https://rdrr.io/cran/elo/)). Implements Elo.
 
-+ *R* `EloRating` (see ["EloRating: Animal Dominance Hierarchies by
++ **R** `EloRating` (see ["EloRating: Animal Dominance Hierarchies by
   Elo Rating"](https://rdrr.io/cran/EloRating/)). Implements Elo.
 
-+ *R* `prefmod` (see ["prefmod: An R Package for Modeling Preferences
++ **R** `EloOptimized` (See
+  [EloOptimized](https://cran.r-project.org/web/packages/EloOptimized/readme/README.html). Implements
+  Elo with optimized Elo parameters.
+
++ **R** `prefmod` (see ["prefmod: An R Package for Modeling Preferences
   Based on Paired Comparisons, Rankings, or Ratings"]()). Implements
-  Bradley-Terry style *paired comparison* generalised-linear models.
+  Bradley-Terry style  *paired comparison* generalised-linear models.
 
-+ *C#* `EloRate` (see [EloRate](https://github.com/richardadalton/EloRate)). Implements Elo.
++ **C#** `EloRate` (see [EloRate](https://github.com/richardadalton/EloRate)). Implements Elo.
 
-+ *Javascript* `sortmatch` (see [sortmatch](https://sortmatch.ca/) and
++ **Javascript** `sortmatch` (see [sortmatch](https://sortmatch.ca/) and
   [sortmatch](https://github.com/bradbeattie/sortmatch)). Implements
   Glicko2 through browser interface.
 
-+ *Java* `glicko2s` (see 
++ **Java** `glicko2s` (see 
   [glick2s](https://github.com/forwardloop/glicko2s/tree/master/src/main)). Implements
-  Glicko2. 
+  Glicko2.
+
++ **Ruby** `elo` (see
+    [GitHub](https://github.com/iain/elo). Implements Elo variants
+  (including FIDE variable K factors). 
+
++ **C++** `Elo Rater` (see [Elo Rater](http://www.garnergaggle.org/papa/chess/ELORater/)). Implements USCF or Harkness style ratings.
+
+
 
 ### Closed Source
 
 
 + `Bayeselo` [Bayesian Elo Rating](https://www.remi-coulom.fr/Bayesian-Elo/). Implements a Bayes
    version of Elo.
-+ Web based [rankade](https://rankade.com/). Implements their own algorithm.
-+ Web based [Chess Elo Rating Calculator](http://www.qa76.net/elo)
++ **Web based** [rankade](https://rankade.com/). Implements their own algorithm.
++ **Web based** [Chess Elo Rating Calculator](http://www.qa76.net/elo)
    Implements Elo.
-+ Web based [Chess Elo Rating Difference Calculator](http://www.3dkingdoms.com/chess/elo.htm)
++ **Web based** [Chess Elo Rating Difference Calculator](http://www.3dkingdoms.com/chess/elo.htm)
    Implements Elo.
-+ Excel [Chess Ranking Assistant](https://www.add-ins.com/free-products/chess-ranking-assistant.htm).
-   Implements Elo.
++ **Excel** Chess Ranking Assistant](https://www.add-ins.com/free-products/chess-ranking-assistant.htm).
+   Implements Glicko.
+
 
 + mirate (for Go)
 
