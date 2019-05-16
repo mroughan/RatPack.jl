@@ -23,10 +23,10 @@ println("score with real ratings = $s2, score with simulated ratings = $s1")
 k = 10
 Random.seed!(1)
 S1 = cross_validate(irule, input_competitions;
-                   k = k,
-                   n_samples = 1000,
-                   batch_size = 1,
-                   srule = ScoreBrier(;normalise=true) )
+                    k = k,
+                    n_samples = 1000,
+                    batch_size = 1,
+                    srule = ScoreBrier(;normalise=true) )
 
 println(" S1bar = $(sum(S1)/k)")
 

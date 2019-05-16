@@ -117,29 +117,40 @@ File formats
 + Competitions
 
   A competition is a pairwise match-up between two contestants called
-  "Player A" and "Player B" along with the result. The result can be
-  expressed as
+  "Player A" and "Player B" along with the result.  Usually each
+  match-up will be represent a single contest as one row of data in a
+  CSV file, but it is possible with the `Result` format to summarise a
+  group of matches.
+
+  The output of match-ups can be expressed as
 
    + an `Outcome`, which is {-1,0,+1} where 1 indicates victory to Player
      A, and -1 victory to Player, and 0 a tie.
-
-   + a `Result`, which is {0, 1/2, 1} where 1 has the same meaning,
-     1/2 means a tie and 0 means victory to Player B.
 
    + a `Margin` which gives the number of "points" by which Player A
      defeats Player B (negative values indicates a victory for Player B).
 
    + a pair of `Scores`, one for each player, i.e., "Score A" and Score B".
 
+   + a `Result`, which is means reports a summary of a `Number` of
+     games and the total result where {0, 1/2, 1} is added, where
+     where 1 means Player A won, 1/2 means a tie and 0 means victory
+     to Player B, so (ignoring ties) the `Result` would report the
+     number of wins for Player A. 
+
   Why have multiple formats? Different tools, packages and algorithms
   use different models and representations. So for portability it is
   useful to support all. Moreover, we want to make it blindingly clear
   which representation is used in each approach.
 
-  Each match-up will be represented as one row of data in a CSV file. 
-
-  Additionally, a
-
+  Additionally, a file can contain columns called `Factor A` and
+  `Factor B`, where small integers provide a notion of the value of
+  factors affecting Player A and B, respectively. For instance, a
+  home-team advantage to Player A might be represented by putting a 1
+  in the the `Factor A` column (and 0 in `Factor B` column) with the
+  interpretation that A has 1 unit of advantage. Team injuries might
+  be represented as a disadvantage by placing a negative value in the
+  team's column. 
 
 + Rankings and other (e.g., matrix) inputs will also be added in the
   future. 
@@ -173,6 +184,12 @@ Many don't come with adequate testing or validation.
 
 ### Open Source
 
++ **R** `comprank`, `comperes` (see
+[CRAN](https://cran.r-project.org/web/packages/comperank/vignettes/methods-overview.html)
+and [CRAN](https://github.com/echasnovski/comperes)). Implements
+Massey, Colley, Keener, Markov, Offence-Defence, Elo, and has a
+general "iterative" method. 
+
 + **R** `PlayerRatings` (see []()). Implements variants of Elo
   (standard, FIDE) Glicko, Glicko2 and Stephenson and has a few routines for
   calculating parameters (the K factor). 
@@ -188,9 +205,16 @@ Many don't come with adequate testing or validation.
   [EloOptimized](https://cran.r-project.org/web/packages/EloOptimized/readme/README.html). Implements
   Elo with optimized Elo parameters.
 
-+ **R** `prefmod` (see ["prefmod: An R Package for Modeling Preferences
-  Based on Paired Comparisons, Rankings, or Ratings"]()). Implements
++ **R** `prefmod` (see [CRAN](https://cran.r-project.org/web/packages/prefmod/index.html) or ["prefmod: An R Package for Modeling Preferences
+  Based on Paired Comparisons, Rankings, or Ratings"](https://www.jstatsoft.org/article/view/v048i10)). Implements
   Bradley-Terry style  *paired comparison* generalised-linear models.
+
++ **R** `BradleyTerry2` (see [BradleyTerry2: Bradley-Terry
+   Models](https://cran.r-project.org/web/packages/BradleyTerry2/index.html)
+   or Firth, D. (2005) Bradley-Terry models in R. Journal of Statistical Software 12(1), 1–12.
+  and Turner, H. and Firth, D. (2012) Bradley-Terry models in R: The BradleyTerry2 package. Journal of
+  Statistical Software, 48(9), 1–21.). Implements Bradley-Terry
+   models. 
 
 + **C#** `EloRate` (see [EloRate](https://github.com/richardadalton/EloRate)). Implements Elo.
 
@@ -224,7 +248,8 @@ Many don't come with adequate testing or validation.
    Implements Glicko.
 
 
-+ mirate (for Go)
++ mirate (for Go))
+pem.nu/cms/uploads/programs/mlrate/mlrate-1.2.tar.gz 
 
 + ELOstat algorithm???
 

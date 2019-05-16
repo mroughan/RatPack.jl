@@ -22,9 +22,9 @@
 ```
 """
 function cross_validate(rule::UpdateRule, input_competitions::DataFrame;
-                        k::Int = 10,
-                        n_samples::Int = 1000,
-                        batch_size::Int = 30,
+                        k::Int = 10, # cross validation parameters
+                        n_samples::Int = 1000, # iteration parameters
+                        batch_size::Int = 30, # iteration parameters
                         srule::ScoringRule = ScoreBrier(;normalise=true) )
     player_list = merge(+, countmap( input_competitions[PlayerA] ), countmap( input_competitions[PlayerB] )  )
     input_ratings = RatingsList( player_list ) # a blank set of starter ratings
@@ -65,11 +65,19 @@ function cross_validate(rule::UpdateRule, file::String;
 end
 
 
-function optimise() 
+function optimise(rule::UpdateRule, input_competitions::DataFrame;
+                  k::Int = 10, # cross-validation parameters
+                  n_samples::Int = 1000, # iteration parameters
+                  batch_size::Int = 30, # iteration parameters
+                  srule::ScoringRule = ScoreBrier(;normalise=true),
+                  optimize_this # parameter that we need to optimize
+                  ) 
     # really should be a separate cross-validation process for choosing "hyperparameters"
     #   need data partitioned into training, test, and validation datasets
 
 
+    # line search does the search, but its kind of ugly to call
+    #   need a nicer strategy to set up the calls
 
-    
+    # or have a separate function to optimise each parameter?, but then how many and how specific? 
 end

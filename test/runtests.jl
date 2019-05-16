@@ -50,6 +50,18 @@ file = "../data/small_netflix_eg.csv"
 (netflix_competitions,  netflix_player_list) = read_results( file )
 netflix_ratings = RatingsList( netflix_player_list )
 
+@testset "Utilities" begin
+    @testset "Line search" begin
+        r = [0.0, 2.0]
+        ε = 1.0e-6
+        (x_star1, y_star1, error_estimate1, n_evaluations2) =
+            linesearch( "Grid", x->sin(x); range=r, ε=ε)
+        (x_star2, y_star2, error_estimate2, n_evaluations2) =
+            linesearch( "Golden", x->sin(x); range=r, ε=ε)
+        @test abs(x_star1 - x_star2) < ε
+    end
+end
+
 @testset "I/O" begin
     @test_throws ArgumentError o = read_results( "test" )
     # @test_throws ErrorException SurrealFinite("1", [x1], [x0])
