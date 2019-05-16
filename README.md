@@ -7,9 +7,10 @@
 
 ## Competitive ratings
 
-Competetive ratings are ratings of players or teams in competitive
-sports created by analysis of their performance. That is, if you win
-more, your rating should be higher.
+Competetive ratings (or contest ratings, or pairwise comparison
+ratings) are ratings of players or teams in competitive sports created
+by analysis of their performance. That is, if you win more, your
+rating should be higher.
 
 There are many schemes for generating such, but essential ideas
 underlying the ratings schemes here is that they be
@@ -115,6 +116,34 @@ File formats
 + Ratings
 + Competitions
 
+  A competition is a pairwise match-up between two contestants called
+  "Player A" and "Player B" along with the result. The result can be
+  expressed as
+
+   + an `Outcome`, which is {-1,0,+1} where 1 indicates victory to Player
+     A, and -1 victory to Player, and 0 a tie.
+
+   + a `Result`, which is {0, 1/2, 1} where 1 has the same meaning,
+     1/2 means a tie and 0 means victory to Player B.
+
+   + a `Margin` which gives the number of "points" by which Player A
+     defeats Player B (negative values indicates a victory for Player B).
+
+   + a pair of `Scores`, one for each player, i.e., "Score A" and Score B".
+
+  Why have multiple formats? Different tools, packages and algorithms
+  use different models and representations. So for portability it is
+  useful to support all. Moreover, we want to make it blindingly clear
+  which representation is used in each approach.
+
+  Each match-up will be represented as one row of data in a CSV file. 
+
+  Additionally, a
+
+
++ Rankings and other (e.g., matrix) inputs will also be added in the
+  future. 
+
 Plenty of other bits and pieces
 
 
@@ -126,3 +155,67 @@ Plenty of other bits and pieces
 ### Generating players
 
 
+
+
+## Related packages
+
+
+Most implement one method or at most a class of similar approaches
+(e.g., Elo and some variants) . For instance, Elo is common and
+implementing variants is not hard, but is a very different approach to
+the Colley system both in terms of inputs and sequential vs batch
+processing. 
+
+Most are not complete solutions: they implement the ratings component,
+but not much else.
+
+Many don't come with adequate testing or validation. 
+
+### Open Source
+
++ *R* `PlayerRatings` (see []()). Implements variants of Elo
+  (standard, FIDE) Glicko, Glicko2 and Stephenson and has a few routines for
+  calculating parameters (the K factor). 
+
++ *R* `elo` (see [CRAN](https://cran.r-project.org/web/packages/elo/vignettes/elo.html) and [GitHub](https://github.com/eheinzen/elo) ). Implements Elo. 
+
++ *R* `elo` (see [elo](https://rdrr.io/cran/elo/)). Implements Elo.
+
++ *R* `EloRating` (see ["EloRating: Animal Dominance Hierarchies by
+  Elo Rating"](https://rdrr.io/cran/EloRating/)). Implements Elo.
+
++ *R* `prefmod` (see ["prefmod: An R Package for Modeling Preferences
+  Based on Paired Comparisons, Rankings, or Ratings"]()). Implements
+  Bradley-Terry style *paired comparison* generalised-linear models.
+
++ *C#* `EloRate` (see [EloRate](https://github.com/richardadalton/EloRate)). Implements Elo.
+
++ *Javascript* `sortmatch` (see [sortmatch](https://sortmatch.ca/) and
+  [sortmatch](https://github.com/bradbeattie/sortmatch)). Implements
+  Glicko2 through browser interface.
+
++ *Java* `glicko2s` (see 
+  [glick2s](https://github.com/forwardloop/glicko2s/tree/master/src/main)). Implements
+  Glicko2. 
+
+### Closed Source
+
+
++ `Bayeselo` [Bayesian Elo Rating](https://www.remi-coulom.fr/Bayesian-Elo/). Implements a Bayes
+   version of Elo.
++ Web based [rankade](https://rankade.com/). Implements their own algorithm.
++ Web based [Chess Elo Rating Calculator](http://www.qa76.net/elo)
+   Implements Elo.
++ Web based [Chess Elo Rating Difference Calculator](http://www.3dkingdoms.com/chess/elo.htm)
+   Implements Elo.
++ Excel [Chess Ranking Assistant](https://www.add-ins.com/free-products/chess-ranking-assistant.htm).
+   Implements Elo.
+
++ mirate (for Go)
+
++ ELOstat algorithm???
+
+### Comparisons
+
++ https://rankade.com/ree#ranking-system-comparison
++ https://www.chessandfun.com/chess-rating-software-for-chess-clubs/

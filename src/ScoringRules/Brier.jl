@@ -8,6 +8,7 @@ export ScoreBrier
 ## References
 * https://en.wikipedia.org/wiki/Scoring_rule
 * https://en.wikipedia.org/wiki/Brier_score
+* https://www2.cs.duke.edu/courses/spring17/compsci590.2/proper_scoring.pdf
 
 ## Parameters
 * `normalise::false`: if true, normalise scores so that for binary choice
