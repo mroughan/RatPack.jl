@@ -63,27 +63,36 @@ end
 * `rule::UpdateRule`: the type of update rule to describe
 
 ## Output
-* `info::Dict`: its fields describe the update rule
-   + `:name => `
+* `info::Dict(Symbol, Any)`: its fields describe the update rule
+   + `:name => ` self reference for checking
    + `:reference =>` a reference to the source of the rule
    + `:computation =>` the mode in which computations are performed, options are
         - "simultaneous" = all input competitions are considered in one calculation
-        - "sequential" = computations are made one competition at a time
-   + `:state_model => how past ratings are used
+        - "sequential" = computations are made one batch of competitions at a time
+   + `:state_model =>` how past ratings are used
         - "recursive" = new ratings are built on top of old ratings
         - "none" = new ratings ignore old ratings
-   + `:input =>` the type of input computation data used
-        - "none" = all input computations are ignored
+   + `:input =>` the type of input competition data used
+        - "none" = all input competitions are ignored
         - "outcome" = win/loss/tie data
         - "score" = the scores of the two players
         - "margin" = the margin between the two players
    + `:output =>` 
-        - "either"
+        - "deterministic" model produces deterministic predictions
+        - "probabilistic" model produces probabilistic predictions
+        - "either" depends on sub-rule being used
    + `:model` => the type of model being used, at the moment only "single" is returned
    + `:ties` => true/false, does the model use information about ties appropriately
    + `:factors` => true/false, does the model all factors
    + `:parameters` => an array of strings describing the parameters of the update model (if any)
 
+## Surprises
+* `Elo` has `:computation => "simultaneous"` because this represents a single update round
+   + sequential-Elo is performed by using the `Iterate` rule
+* `Iterate` and `IterateSample `
+   + take many qualities from a sub-rule that they iterate 
+   + only makes sense to use these for recursive sub-rules.
+* Remember dictionaries are not sorted, so the order may change in output.
 
 ```
 """
