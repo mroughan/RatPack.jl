@@ -34,8 +34,9 @@ UpdateElo(;r0=1500.0, K=32.0, θ=default_θ) = UpdateElo( r0, K, Logistic(0.0, �
 function update_info( rule::UpdateElo )
     info = Dict(
                 :name => "Elo",
-                :mode => "recursive",
                 :reference => "\"Whos's #1\", Langville and Meyer, p.?? and ??",
+                :computation => "simultaneous",
+                :state_model => "recursive",
                 :input => "outcome", 
                 :output => "probabilistic",
                 :model => "single",   

@@ -19,7 +19,7 @@ struct UpdateIterate <: UpdateRule
     batch_size::Int
     function UpdateIterate(rule::UpdateRule, batch_size::Int)
         @check_args(UpdateIterate, batch_size >= one(batch_size))
-        @check_args(UpdateIterate, update_info(rule)[:mode] == "recursive")
+        @check_args(UpdateIterate, update_info(rule)[:state_model] == "recursive")
         new(rule, batch_size)
     end
 end
@@ -28,8 +28,9 @@ UpdateIterate(;rule::UpdateRule=UpdateElo(), batch_size::Int=1 ) = UpdateIterate
 function update_info( rule::UpdateIterate )
     info = Dict(
                 :name => "Iterate",
-                :mode => "recursive", 
                 :reference => "none",
+                :computation => "sequential",
+                :state_model => "recursive",
                 :input => update_info( rule.rule )[:input], 
                 :output => update_info( rule.rule )[:output],
                 :model => update_info( rule.rule )[:model], 

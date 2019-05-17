@@ -31,6 +31,7 @@ include("Utilities.jl")
 ### I/O routines
 include("IO.jl")
 
+###########################################################################3
 ### Models for update calculation rules and predictions
 abstract type UpdateRule end
 
@@ -38,7 +39,7 @@ abstract type UpdateRule end
 """
     update_ratings()
 
- Compute one round of updates to ratings
+ Compute one round of updates to ratings.
 
 ## Input arguments
 * `rule::UpdateRule`: the type of update rule to use
@@ -50,6 +51,43 @@ abstract type UpdateRule end
 function update_ratings( rule::UpdateRule,
                          input_ratings::RatingsList,
                          input_competitions::DataFrame )
+    error("undefined update rule") # this is the default that is called with an update rule that isn't properly defined
+end
+
+"""
+    update_info()
+
+ Return information about an update rule.
+
+## Input arguments
+* `rule::UpdateRule`: the type of update rule to describe
+
+## Output
+* `info::Dict`: its fields describe the update rule
+   + `:name => `
+   + `:reference =>` a reference to the source of the rule
+   + `:computation =>` the mode in which computations are performed, options are
+        - "simultaneous" = all input competitions are considered in one calculation
+        - "sequential" = computations are made one competition at a time
+   + `:state_model => how past ratings are used
+        - "recursive" = new ratings are built on top of old ratings
+        - "none" = new ratings ignore old ratings
+   + `:input =>` the type of input computation data used
+        - "none" = all input computations are ignored
+        - "outcome" = win/loss/tie data
+        - "score" = the scores of the two players
+        - "margin" = the margin between the two players
+   + `:output =>` 
+        - "either"
+   + `:model` => the type of model being used, at the moment only "single" is returned
+   + `:ties` => true/false, does the model use information about ties appropriately
+   + `:factors` => true/false, does the model all factors
+   + `:parameters` => an array of strings describing the parameters of the update model (if any)
+
+
+```
+"""
+function update_info( rule::UpdateRule )
     error("undefined update rule") # this is the default that is called with an update rule that isn't properly defined
 end
 
@@ -87,6 +125,7 @@ for (i,u) in enumerate(update_rule_list)
 end
 
 
+###########################################################################3
 ### Simulation tools
 abstract type SimulateRule end
 abstract type GenerateRule end
@@ -132,6 +171,7 @@ function generate()
     error("undefined generation rule") # this is the default that is called with an update rule that isn't properly defined
 end
 
+###########################################################################3
 ### Scoring Rules
 abstract type ScoringRule end
 
@@ -215,6 +255,7 @@ for (i,u) in enumerate(scoring_rule_list)
     scoring_rule_names[i] = "Score$(u)"
 end
 
+###########################################################################3
 ### Wrapper functions
 include("Wrappers.jl")
 

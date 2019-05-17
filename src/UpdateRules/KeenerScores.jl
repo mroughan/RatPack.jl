@@ -22,7 +22,8 @@ function update_info( rule::UpdateKeenerScores )
     info = Dict(
                 :name => "KeenerScores",
                 :reference => "\"Whos's #1\", Langville and Meyer, p.29",
-                :mode => "batch",
+                :computation => "simultaneous",
+                :state_model => "none",
                 :input => "outcome",
                 :output => "deterministic",
                 :model => "single",

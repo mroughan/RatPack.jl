@@ -40,8 +40,9 @@ UpdateEloF(;r0=1500.0, K=32.0, θ=default_θ, factor_scale=default_θ) = UpdateE
 function update_info( rule::UpdateEloF )
     info = Dict(
                 :name => "EloF",
-                :mode => "recursive",
                 :reference => "\"Whos's #1\", Langville and Meyer, p.?? and ??",
+                :computation => "simultaneous",
+                :state_model => "recursive",
                 :input => "outcome,factors", 
                 :output => "probabilistic",
                 :model => "single",   

@@ -8,7 +8,7 @@ export UpdateRevert
 
 ## Parameters
 * `r_base::Float64`: baseline rating to revert towards
-* `α::Float64`:      weight to give to new data
+* `α::Float64`:      weight to give to existing rating, (1-α) is weight towards baseline r_base
  
 ```
 """
@@ -21,13 +21,14 @@ struct UpdateRevert <: UpdateRule
         new(r_base, α)
     end
 end
-UpdateRevert(;r_base=1500.0, α=0.15) = UpdateRevert(r_base, α)
+UpdateRevert(;r_base=1500.0, α=0.75) = UpdateRevert(r_base, α)
 
 function update_info( rule::UpdateRevert )
     info = Dict(
                 :name => "Revert",
-                :mode => "recursive",
-                :reference => "Patterned after 538's approach to dealing with season changes: see ???",
+                :reference => "Patterned after 538's approach to dealing with season changes: see https://fivethirtyeight.com/features/how-we-calculate-nba-elo-ratings/",
+                :computation => "simultaneous",# could be argued this is sequential
+                :state_model => "recursive",
                 :input => "none",
                 :output => "either",
                 :model => "single",

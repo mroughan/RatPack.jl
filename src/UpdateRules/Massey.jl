@@ -17,7 +17,8 @@ function update_info( rule::UpdateMassey )
     info = Dict(
                 :name => "Massey",
                 :reference => "\"Whos's #1\", Langville and Meyer, p.9",
-                :mode => "batch",
+                :computation => "simultaneous",
+                :state_model => "none",
                 :input => "score",
                 :output => "deterministic",
                 :model => "single",

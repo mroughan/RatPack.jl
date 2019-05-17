@@ -17,7 +17,8 @@ function update_info( rule::UpdateColley )
     info = Dict(
                 :name => "Colley",
                 :reference => "\"Whos's #1\", Langville and Meyer, p.21",
-                :mode => "batch",
+                :computation => "simultaneous",
+                :state_model => "none",
                 :input => "outcome",
                 :output => "deterministic",
                 :model => "single",

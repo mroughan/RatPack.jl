@@ -23,7 +23,7 @@ struct UpdateSampleIterate <: UpdateRule
     function UpdateSampleIterate(rule::UpdateRule, batch_size::Int, n_samples::Int)
         @check_args(UpdateSampleIterate, batch_size >= one(batch_size))
         @check_args(UpdateSampleIterate, n_samples >= one(n_samples))
-        @check_args(UpdateSampleIterate, update_info(rule)[:mode] == "recursive")
+        @check_args(UpdateSampleIterate, update_info(rule)[:state_model] == "recursive")
         new(rule, batch_size, n_samples)
     end
 end
@@ -32,8 +32,9 @@ UpdateSampleIterate(;rule::UpdateRule=UpdateElo(), batch_size::Int=1, n_samples:
 function update_info( rule::UpdateSampleIterate )
     info = Dict(
                 :name => "SampleIterate",
-                :mode => "recursive", 
                 :reference => "none",
+                :computation => "sequential",
+                :state_model => "recursive",
                 :input => update_info( rule.rule )[:input], 
                 :output => update_info( rule.rule )[:output],
                 :model => update_info( rule.rule )[:model], 
