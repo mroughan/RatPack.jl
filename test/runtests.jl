@@ -74,7 +74,49 @@ end
     test_out = "test_ratings.csv"
     write_ratings( test_out,  massey_ratings)
     df,r = read_ratings( test_out )
-    @test r == massey_ratings 
+    @test r == massey_ratings
+
+    # test for a wide range of input errors in competitions
+    error_list = ["Input DataFrame must have a 'Player A' column'",
+                  "Input DataFrame 'Player A' column must have type String",
+                  "Input DataFrame must have a 'Player B' column'",
+                  "Input DataFrame 'Player B' column must have type String",
+                  "Input DataFrame 'Outcome' column must have type Union{Missing, Integer}",
+                  "Input DataFrame 'Outcome' column should be -1,0,1 (or missing)",
+                  "Input DataFrame 'Result' column must have type Union{Missing, Real}",
+                  "Input DataFrame 'Result' column should be >= 0 (or missing)",
+                  "Input DataFrame 'No. of matches' column must have type Union{Missing, Integer}",
+                  "Input DataFrame 'No. of matches' column should be >= 1 (or missing)",
+                  "Input DataFrame 'Score A' column must have type Union{Missing, Integer}",
+                  "Input DataFrame 'Score B' column must have type Union{Missing, Integer}",
+                  "Input DataFrame only has 'Score A' column, not 'Score B'",
+                  "Input DataFrame only has 'Score B' column, not 'Score A'",
+                  "Input DataFrame 'Margin' column must have type Union{Missing, Integer}",
+                  "Input DataFrame 'Factor A' column must have type Union{Missing, Integer}",
+                  "Input DataFrame 'Factor B' column must have type Union{Missing, Integer}",
+                  "Input DataFrame only has 'Factor A' column, not 'Factor B'",
+                  "Input DataFrame only has 'Factor B' column, not 'Factor A'",
+                  "Input DataFrame: Margins are inconsistent with Scores",
+                  "Input DataFrame: Outcomes are inconsistent with Margins",
+                  "",
+                  "",
+                  ] 
+    
+    errored_file_dir = "../data/errored_files"
+    files = readdir(errored_file_dir)
+    i = 1
+    for f in files
+        # global file, df, i
+        if match(r".csv$", f) !== nothing
+            file = "$errored_file_dir/$f"
+            # println("testing $file ($i of $(length(files)))")
+            df = CSV.read(file; comment="#")
+            @test_throws ErrorException(error_list[i]) check_results( df )
+            
+            i += 1
+        end
+    end
+    
 end
 
 @testset "Info" begin

@@ -11,14 +11,12 @@ using DataFrames
 using CSV
 using LinearAlgebra
 
-export check_ratings, read_ratings, write_ratings, check_results, read_results, write_results, read_ratingstable, write_ratingstable # I/O functions
-export update_ratings, predict_outcome, update_info, summarize, increment!, reset!, player_indexes, linesearch
+export update_ratings, predict_outcome, update_info, increment!, reset!, player_indexes, linesearch
 export update_rule_list, update_rule_names, simulate_rule_list, simulate_rule_names, scoring_rule_list, scoring_rule_names
 export UpdateRule, SimulateRule, GenerateRule, ScoringRule # parent abstract types -- instantiations are exported in their own files
 export RatingsList, RatingsTable # main datastructures
 export simulate, generate # simulation tools
 export score_ratings, scoring_function, score_direction
-export PlayerA, PlayerB, Outcome, FactorA, FactorB, ScoreA, ScoreB # various useful symbol abbreviations
 export copy, push!, append!, insert!, getindex, setindex!, length, size, lastindex, ==
 export cross_validate, optimise # higher-level wrapper functions
 

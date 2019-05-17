@@ -1,3 +1,7 @@
+export PlayerA, PlayerB, Outcome, FactorA, FactorB, ScoreA, ScoreB, Margin, No # various useful symbol abbreviations
+export check_ratings, read_ratings, write_ratings
+export check_results, read_results, write_results, summarize
+export read_ratingstable, write_ratingstable 
 
 # useful symbols for working with ratings data frames
 PlayerA = Symbol("Player A")
@@ -7,6 +11,9 @@ FactorA = Symbol("Factor A")
 FactorB = Symbol("Factor B")
 ScoreA = Symbol("Score A")
 ScoreB = Symbol("Score B")
+Margin = Symbol("Margin")
+Result = Symbol("Result")
+No = Symbol("No. of matches")
 # don't need to abbreviate
 #  :Players, :Ratings
 
@@ -93,20 +100,91 @@ function check_results( df::DataFrame )
     if !( eltype(df[PlayerB]) <: Union{Missing, AbstractString} )
        error("Input DataFrame 'Player B' column must have type String")
     end
-    if !haskey(df, Outcome)
-        error("Input DataFrame must have a 'Outcome' column")
+
+    if haskey(df, Outcome)
+        if !( eltype(df[Outcome]) <: Union{Missing, Integer} )
+            error("Input DataFrame 'Outcome' column must have type Union{Missing, Integer}")
+        end
+        if maximum(skipmissing(df[Outcome])) > 1 ||  minimum(skipmissing(df[Outcome])) < -1
+            error("Input DataFrame 'Outcome' column should be -1,0,1 (or missing)")
+        end
     end
-    if !( eltype(df[Outcome]) <: Union{Missing, Integer} )
-        error("Input DataFrame must have a 'Outcome' column must have type Union{Missing, Integer}")
+
+    if haskey(df, Result)
+        if !( eltype(df[Result]) <: Union{Missing, Real} )
+            error("Input DataFrame 'Result' column must have type Union{Missing, Real}")
+        end
+        if minimum(skipmissing(df[Result])) < 0
+            error("Input DataFrame 'Result' column should be >= 0 (or missing)")
+            # should really check it is an integer or half integer
+        end
+        if !haskey(df, No)
+            error("Input DataFrame 'Result' column also requires 'No. of matches' column")
+        end
+        if !( eltype(df[No]) <: Union{Missing, Integer} )
+            error("Input DataFrame 'No. of matches' column must have type Union{Missing, Integer}")
+        end
+        if minimum(skipmissing(df[No])) < 1
+            error("Input DataFrame 'No. of matches' column should be >= 1 (or missing)")
+        end
     end
-    if maximum(skipmissing(df[Outcome])) > 1 ||  minimum(skipmissing(df[Outcome])) < -1
-        error("Input DataFrame 'Outcome' column should be -1,0,1 (or missing, for now)")
+
+    if haskey(df, ScoreA) && haskey(df, ScoreB)
+        if !( eltype(df[ScoreA]) <: Union{Missing, Integer} )
+            error("Input DataFrame 'Score A' column must have type Union{Missing, Integer}")
+        end
+        if !( eltype(df[ScoreB]) <: Union{Missing, Integer} )
+            error("Input DataFrame 'Score B' column must have type Union{Missing, Integer}")
+        end
+    elseif haskey(df, ScoreA)
+            error("Input DataFrame only has 'Score A' column, not 'Score B'")
+    elseif haskey(df, ScoreB)
+            error("Input DataFrame only has 'Score B' column, not 'Score A'")
+    end  
+
+    if haskey(df, Margin) && !( eltype(df[Margin]) <: Union{Missing, Integer} )
+        error("Input DataFrame 'Margin' column must have type Union{Missing, Integer}")
     end
-    # should we check for Factor A and Factor B?
-    # should we check for Score A and Score B?
+
+    if haskey(df, FactorA) && haskey(df, FactorB)
+        if !( eltype(df[FactorA]) <: Union{Missing, Integer} )
+            error("Input DataFrame 'Factor A' column must have type Union{Missing, Integer}")
+        end
+        if !( eltype(df[FactorB]) <: Union{Missing, Integer} )
+            error("Input DataFrame 'Factor B' column must have type Union{Missing, Integer}")
+        end
+    elseif haskey(df, FactorA)
+            error("Input DataFrame only has 'Factor A' column, not 'Factor B'")
+    elseif haskey(df, FactorB)
+            error("Input DataFrame only has 'Factor B' column, not 'Factor A'")
+    end  
+
+    # add columns that we can add
+    if haskey(df, ScoreA) && haskey(df, ScoreB) && !haskey(df, Margin)
+        df[Margin] = df[ScoreA] - df[ScoreB]
+    end
+
+    if haskey(df, Margin) && !haskey(df, Outcome)
+        df[Outcome] = sign.(df[Margin])
+    end
+
+    # check for consistency between different types of inputs 
+    if !all(skipmissing( df[Margin] .== df[ScoreA] - df[ScoreB] ))
+        error("Input DataFrame: Margins are inconsistent with Scores")
+    end
+    if !all(skipmissing( df[Outcome] .== sign.(df[Margin]) ))
+        error("Input DataFrame: Outcomes are inconsistent with Margins")
+    end
+ 
+    # results format isn't compatible with outcomes (or scores and margins)
+    # so don't try to translate from one to the other (at the moment)
+    # but we could at least check that both aren't there
+    # should also check that
+    #   - Result <= No
+  
 end
  
-# read in a CSV file of ratings
+# read in a CSV file of competitions
 function read_results( file::String )
     df = CSV.read(file; comment="#")
     check_results( df )
@@ -145,7 +223,6 @@ function summarize( df::DataFrame,  player_list::Dict{String,Int64})
 end
 
 # is there any need to write out a list of competition results????
-
 
 
 #####################################
