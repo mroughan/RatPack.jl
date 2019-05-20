@@ -72,9 +72,10 @@ end
         - "none" = new ratings ignore old ratings
    + `:input =>` the type of input competition data used
         - "none" = all input competitions are ignored
-        - "outcome" = win/loss/tie data
+        - "outcome" = win/loss/tie listing for single competitions
         - "score" = the scores of the two players
         - "margin" = the margin between the two players
+        - "result" = the totalled results of a set of competitions between two players
    + `:output =>` 
         - "deterministic" model produces deterministic predictions
         - "probabilistic" model produces probabilistic predictions
@@ -154,7 +155,7 @@ function simulate(r::RatingsList, model::SimulateRule, perf_model::ContinuousUni
 end
 
 # actual instantiations of simulation rules 
-simulate_rule_list = ["RoundRobin", "Elimination"]
+simulate_rule_list = ["RoundRobin","RoundRobinF",  "Elimination"]
 simulate_rule_names = Array{String,1}(undef,length(simulate_rule_list))
 for (i,u) in enumerate(simulate_rule_list)
     u_file = "Simulation/$(u).jl"

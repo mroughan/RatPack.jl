@@ -1,6 +1,7 @@
 using RatPack
 using Distributions
 using DataFrames
+using CSV
 using Test
 
 # test case from "Whos's #1", Langville and Meyer

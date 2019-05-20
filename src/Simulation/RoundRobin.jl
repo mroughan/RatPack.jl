@@ -16,6 +16,10 @@ export SimRoundRobin
 """
 struct SimRoundRobin <: SimulateRule
     n::Int
+    function SimRoundRobinF(n, factor_scale)
+        @check_args(SimRoundRobin, n >= one(n))
+        new(n)
+    end
 end
 SimRoundRobin(; n::Int=1) = SimRoundRobin(n)    
 

@@ -1,6 +1,6 @@
 export PlayerA, PlayerB, Outcome, FactorA, FactorB, ScoreA, ScoreB, Margin, No # various useful symbol abbreviations
 export check_ratings, read_ratings, write_ratings
-export check_results, read_results, write_results, summarize
+export check_results, read_results, write_results, summarize, summarizeF
 export read_ratingstable, write_ratingstable 
 
 # useful symbols for working with ratings data frames
@@ -218,6 +218,49 @@ function summarize( df::DataFrame,  player_list::Dict{String,Int64})
     new_df = DataFrame( Player=Array{String,1}(), Record=Array{String,1}(), ScoreDiff = Array{Int64,1}() )
     for p in keys(player_list)
         push!( new_df, [p, "$(wins[p])/$(player_list[p])", score_diff[p] ])
+    end
+    return new_df
+end
+
+# summarize a list of competitions with home/away factors
+#   presumes that exactly one of FactorA and FactorB is 0, and one is 1 indicating home-ground
+function summarizeF( df::DataFrame,  player_list::Dict{String,Int64})
+    home_wins = copy(player_list)
+    away_wins = copy(player_list)
+    home_games = copy(player_list)
+    away_games = copy(player_list)
+    reset!(home_wins)
+    reset!(away_wins)
+    reset!(home_games)
+    reset!(away_games)
+    score_diff = Dict{String,Int64}()
+    for i=1:size(df,1)
+        # ignores ties
+        if df[i,Outcome] == 1 && df[i,FactorA] == 1
+            increment!(home_wins, df[i,PlayerA], 1)
+            increment!(home_games, df[i,PlayerA], 1)
+            increment!(away_games, df[i,PlayerB], 1)
+        elseif df[i,Outcome] == 1 && df[i,FactorA] == 0
+            increment!(away_wins, df[i,PlayerA], 1)
+            increment!(away_games, df[i,PlayerA], 1)
+            increment!(home_games, df[i,PlayerB], 1)
+        elseif df[i,Outcome] == -1 && df[i,FactorB] == 1
+            increment!(home_wins, df[i,PlayerB], 1)
+            increment!(home_games, df[i,PlayerB], 1)
+            increment!(away_games, df[i,PlayerA], 1)
+        elseif df[i,Outcome] == -1 && df[i,FactorB] == 0
+            increment!(away_wins, df[i,PlayerB], 1)
+            increment!(away_games, df[i,PlayerB], 1)
+            increment!(home_games, df[i,PlayerA], 1)
+        end
+        diff = df[i,ScoreA] - df[i,ScoreB]
+        increment!(score_diff, df[i,PlayerA], diff)
+        increment!(score_diff, df[i,PlayerB], -diff)
+    end
+
+    new_df = DataFrame( Player=Array{String,1}(), HomeRecord=Array{String,1}(), AwayRecord=Array{String,1}() )
+    for p in keys(player_list)
+        push!( new_df, [p, "$(home_wins[p])/$(home_games[p])", "$(away_wins[p])/$(away_games[p])" ])
     end
     return new_df
 end
