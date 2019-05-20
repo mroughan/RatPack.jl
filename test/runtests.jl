@@ -72,7 +72,7 @@ end
            DataFrame(Player=["Duke","Miami","UNC","UVA","VT"], Record=["0/4","4/4","2/4","1/4","3/4"], ScoreDiff=[-124,91,-40,-17,90])
            )
 
-    test_out = "test_ratings.csv"
+    test_out = "Tmp/test_ratings.csv"
     write_ratings( test_out,  massey_ratings)
     df,r = read_ratings( test_out )
     @test r == massey_ratings
@@ -452,7 +452,7 @@ end
     @test R5[end:end] == RatingsTable(iterate_ratings2).ratings
 
     # extra I/O question
-    test_out2 = "test_ratings_table_out.csv"
+    test_out2 = "Tmp/test_ratings_table_out.csv"
     write_ratingstable( test_out2, R5 )
     R7 = read_ratingstable( test_out2 )
     @test R5 == R7

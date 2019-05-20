@@ -1,6 +1,7 @@
 Tex/
 OtherSoftware/
 Background/
+Tmp/
 *~
 *.jl.*.cov
 *.jl.cov
