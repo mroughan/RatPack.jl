@@ -4,6 +4,7 @@ os:
   - linux
   - osx
 julia:
+  - 1.0
   - 1.1
   - nightly
 matrix:
@@ -12,6 +13,9 @@ matrix:
   fast_finish: true
 notifications:
   email: false
+#script: # the default script is equivalent to the following
+#  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
+#  - julia -e 'Pkg.clone(pwd()); Pkg.build("Example"); Pkg.test("Example"; coverage=true)';
 after_success:
   - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Codecov.submit(process_folder())'
   - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Coveralls.submit(process_folder())'
