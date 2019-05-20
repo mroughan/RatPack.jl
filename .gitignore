@@ -1,7 +1,8 @@
 Tex/
 OtherSoftware/
 Background/
-Tmp/
+Tmp/*csv
+Plots/*
 *~
 *.jl.*.cov
 *.jl.cov
