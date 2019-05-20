@@ -1,7 +1,7 @@
 name = "RatPack"
 uuid = "6eb37bf5-b193-570e-991c-f15d35c64f82"
 authors = ["Matthew Roughan <matthew.roughana@adelaide.edu.au>"]
-version = "0.1.0"
+version = "0.0.1"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -14,3 +14,6 @@ StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
